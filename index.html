@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>乐子小说 · 把一部长篇写到底</title>
+<meta name="description" content="一个地方，只做一件事：把一部长篇写完。大纲和正文住在同一个界面，章号自己跟上，删错了能捡回来。不注册，不登录。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="乐子小说 · 把一部长篇写到底">
+<meta property="og:description" content="大纲和正文住在同一个界面。不注册，不登录，写作全程离线。">
+<meta property="og:image" content="https://lezi-novel-download.app.workbuddy.host/assets/logo-mark.png">
+<meta name="theme-color" content="#070809">
+<link rel="icon" href="assets/logo-mark.png">
+<noscript><style>.rv,.rise{opacity:1;transform:none;clip-path:none}.marq-track{animation:none}</style></noscript>
+<style>
+:root{
+  --bg:#070809;
+  --bg2:#0B0D0E;
+  --line:rgba(255,255,255,.075);
+  --line2:rgba(255,255,255,.14);
+  --text:#EDEAE6;
+  --dim:#93958F;
+  --dim2:#71746F;
+  --brand:#4E9C82;
+  --brand-lt:#78CDAE;
+  --brand-dk:#3F6B5C;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --serif:"Songti SC","Source Han Serif SC","Noto Serif CJK SC",Georgia,serif;
+  --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:var(--sans);line-height:1.7;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body.lock{overflow:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+::selection{background:rgba(78,156,130,.32)}
+
+/* ─── 背景层 ─────────────────────────────── */
+.bg{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.bg .grid{
+  position:absolute;inset:-2px;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 90% 62% at 50% 0%,#000 18%,transparent 78%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 62% at 50% 0%,#000 18%,transparent 78%);
+  opacity:.65;
+}
+.bg .glow{
+  position:absolute;width:880px;height:880px;border-radius:50%;
+  left:calc(var(--mx,50vw) - 440px);top:calc(var(--my,18vh) - 440px);
+  background:radial-gradient(circle,rgba(78,156,130,.14),rgba(78,156,130,.045) 42%,transparent 70%);
+  transition:left .5s var(--ease),top .5s var(--ease);
+}
+.bg .beam{
+  position:absolute;top:-8%;left:50%;width:1px;height:62%;
+  background:linear-gradient(to bottom,transparent,rgba(120,205,174,.4),transparent);
+  transform:translateX(-50%);opacity:.45;
+}
+#stars{position:absolute;inset:0;width:100%;height:100%}
+.bg .vig{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 130% 82% at 50% 0%,transparent 32%,rgba(7,8,9,.92) 80%);
+}
+
+/* ─── 顶栏 ───────────────────────────────── */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  display:flex;align-items:center;gap:28px;
+  padding:16px clamp(18px,4vw,54px);
+  transition:background .35s,backdrop-filter .35s,border-color .35s;
+  border-bottom:1px solid transparent;
+}
+header.solid{
+  background:rgba(7,8,9,.74);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-bottom-color:var(--line);
+}
+.brand{display:flex;align-items:center;gap:11px;flex-shrink:0}
+.brand img{height:23px;width:auto}
+.brand-txt{font-size:12px;letter-spacing:.18em;color:var(--dim);padding-left:11px;
+  border-left:1px solid var(--line2);font-family:var(--mono)}
+/* 内测标记：顶栏常驻。用暖金色而不是品牌绿 —— 它是个状态提示，不该混进品牌色里 */
+.beta{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;flex-shrink:0;
+  padding:3px 8px;border-radius:5px;line-height:1.5;
+  color:#F0C98A;border:1px solid rgba(240,201,138,.34);background:rgba(240,201,138,.08);
+}
+header nav{display:flex;gap:30px;margin-left:auto;font-size:13.5px;color:var(--dim)}
+header nav a{position:relative;padding:4px 0;transition:color .25s}
+header nav a:hover,header nav a.active{color:var(--text)}
+header nav a::after{
+  content:"";position:absolute;left:0;bottom:0;height:1px;width:0;
+  background:var(--brand-lt);transition:width .3s var(--ease);
+}
+header nav a:hover::after,header nav a.active::after{width:100%}
+.hdr-cta{flex-shrink:0}
+#prog{position:fixed;top:0;left:0;height:2px;width:0;z-index:70;
+  background:linear-gradient(90deg,var(--brand-dk),var(--brand-lt));
+  box-shadow:0 0 12px rgba(120,205,174,.55)}
+
+/* ─── 按钮 ───────────────────────────────── */
+.btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:13px 26px;border-radius:11px;font-size:14.5px;font-weight:500;
+  border:1px solid var(--line2);background:rgba(255,255,255,.03);color:var(--text);
+  cursor:pointer;overflow:hidden;white-space:nowrap;
+  transition:transform .25s var(--ease),border-color .25s,background .25s;
+}
+.btn:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.3)}
+.btn::before{
+  content:"";position:absolute;inset:0;transform:translateX(-110%);
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.16),transparent);
+  transition:transform .7s var(--ease);
+}
+.btn:hover::before{transform:translateX(110%)}
+.btn-p{
+  background:linear-gradient(180deg,#5FB595,#3F6B5C);border-color:rgba(120,205,174,.5);
+  color:#04120D;font-weight:600;
+  box-shadow:0 0 0 1px rgba(120,205,174,.13),0 14px 40px -14px rgba(78,156,130,.75);
+}
+.btn-p:hover{border-color:rgba(170,240,215,.8)}
+.btn-sm{padding:9px 19px;font-size:13px;border-radius:9px}
+/* 磁吸：跟手的那一下。位移由 JS 写在 inline style，覆盖这里的 hover 位移 */
+.btn.mag{transition:transform .18s var(--ease),border-color .25s,background .25s}
+
+/* ─── Hero ───────────────────────────────── */
+main{position:relative;z-index:1}
+.hero{
+  max-width:1220px;margin:0 auto;padding:152px clamp(18px,4vw,54px) 92px;
+  display:grid;grid-template-columns:1.08fr .92fr;gap:56px;align-items:center;
+}
+.chip{
+  display:inline-flex;align-items:center;gap:9px;font-size:12px;letter-spacing:.05em;
+  padding:6px 14px 6px 11px;border-radius:99px;border:1px solid var(--line2);
+  background:rgba(78,156,130,.07);color:var(--brand-lt);margin-bottom:26px;
+  font-family:var(--mono);
+}
+.chip .dot{width:6px;height:6px;border-radius:50%;background:var(--brand-lt);
+  box-shadow:0 0 8px var(--brand-lt);animation:pulse 2.4s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+h1{
+  font-size:clamp(31px,4.5vw,52px);line-height:1.22;margin:0 0 16px;
+  font-weight:600;letter-spacing:-.02em;
+  display:flex;flex-direction:column;justify-content:flex-end;min-height:1.32em;
+}
+#tw{background:linear-gradient(180deg,#fff 18%,#9FB8AE);-webkit-background-clip:text;
+  background-clip:text;-webkit-text-fill-color:transparent}
+.caret{display:inline-block;width:2px;height:.92em;background:var(--brand-lt);
+  vertical-align:-.09em;margin-left:5px;animation:blink 1.05s steps(1) infinite}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+.lede{font-size:16.5px;color:var(--dim);max-width:32em;margin:0 0 34px}
+.lede b{color:#C6C8C4;font-weight:500}
+.lede p{margin:0 0 14px}
+.lede p:last-child{margin-bottom:0}
+.lede .kicker{color:#C6C8C4}
+.cta{display:flex;gap:13px;flex-wrap:wrap;align-items:center}
+
+/* ─── 手机 ───────────────────────────────── */
+.phone{position:relative;perspective:1400px;display:flex;justify-content:center}
+.phone-in{
+  position:relative;width:min(310px,74vw);border-radius:40px;
+  transform-style:preserve-3d;transition:transform .5s var(--ease);
+  box-shadow:0 0 0 9px #141618,0 0 0 10px rgba(255,255,255,.09),
+             0 50px 110px -32px rgba(0,0,0,.95),0 0 90px -30px rgba(78,156,130,.5);
+}
+.phone-in::after{
+  content:"";position:absolute;inset:0;border-radius:40px;pointer-events:none;
+  background:linear-gradient(140deg,rgba(255,255,255,.1),transparent 32%,transparent 68%,rgba(255,255,255,.05));
+}
+.phone-in img{border-radius:40px;width:100%}
+.phone .badge{
+  position:absolute;z-index:3;font-family:var(--mono);font-size:11px;letter-spacing:.04em;
+  padding:5px 11px;border-radius:7px;background:rgba(10,12,13,.88);
+  border:1px solid var(--line2);color:var(--brand-lt);backdrop-filter:blur(8px);
+}
+.phone .b1{top:13%;left:-16px;animation:float 5.5s ease-in-out infinite}
+.phone .b2{bottom:14%;right:-16px;animation:float 6.5s ease-in-out infinite .7s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+
+/* ─── 走马灯 ─────────────────────────────── */
+.marq{border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  overflow:hidden;padding:17px 0;background:rgba(255,255,255,.012)}
+.marq-track{display:flex;gap:52px;width:max-content;will-change:transform}
+.marq-track span{font-size:13px;color:var(--dim2);letter-spacing:.16em;white-space:nowrap;
+  display:flex;align-items:center;gap:52px}
+.marq-track span::after{content:"◆";font-size:7px;color:var(--brand-dk)}
+
+/* ─── 区块 ───────────────────────────────── */
+section{max-width:1220px;margin:0 auto;padding:clamp(64px,9vw,120px) clamp(18px,4vw,54px)}
+.eyebrow{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.2em;color:var(--brand-lt);text-transform:uppercase;margin-bottom:18px}
+.eyebrow::after{content:"";flex:1;height:1px;background:var(--line);max-width:120px}
+h2{font-size:clamp(26px,3.6vw,40px);margin:0 0 16px;font-weight:600;letter-spacing:-.02em;line-height:1.25}
+.sub{color:var(--dim);font-size:15.5px;max-width:44em;margin:0 0 52px}
+
+/* ─── 画廊 ───────────────────────────────── */
+.gal{
+  display:flex;gap:34px;overflow-x:auto;padding:10px 4px 34px;
+  scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+  perspective:1200px;scrollbar-width:thin;scrollbar-color:var(--line2) transparent;
+}
+.gal::-webkit-scrollbar{height:5px}
+.gal::-webkit-scrollbar-track{background:var(--line);border-radius:9px}
+.gal::-webkit-scrollbar-thumb{background:var(--dim2);border-radius:9px}
+.gal::-webkit-scrollbar-thumb:hover{background:var(--brand-dk)}
+.gitem{flex:0 0 auto;scroll-snap-align:center;width:246px;text-align:center;margin:0;
+  cursor:zoom-in;will-change:transform}
+.gitem .ph{position:relative;border-radius:30px;overflow:hidden;
+  box-shadow:0 0 0 7px #141618,0 0 0 8px rgba(255,255,255,.08),0 30px 60px -24px rgba(0,0,0,.9);
+  transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
+.gitem:hover .ph{transform:translateY(-10px);
+  box-shadow:0 0 0 7px #141618,0 0 0 8px rgba(120,205,174,.42),0 40px 74px -24px rgba(0,0,0,.95)}
+.gitem img{border-radius:30px}
+.gitem figcaption{margin-top:17px;font-size:13px;color:var(--dim);letter-spacing:.04em}
+.gitem figcaption b{display:block;color:var(--text);font-weight:500;font-size:14px;margin-bottom:2px}
+.galbar{margin-top:14px;display:flex;align-items:center;gap:16px;font-family:var(--mono)}
+.galbar button{
+  width:38px;height:38px;flex-shrink:0;border-radius:10px;cursor:pointer;
+  border:1px solid var(--line2);background:rgba(255,255,255,.03);color:var(--text);
+  font-size:16px;line-height:1;display:flex;align-items:center;justify-content:center;
+  transition:border-color .25s,background .25s,transform .2s var(--ease);
+}
+.galbar button:hover{border-color:rgba(120,205,174,.5);background:rgba(78,156,130,.1)}
+.galbar button:active{transform:scale(.94)}
+.galbar .idx{font-size:12.5px;color:var(--dim2);letter-spacing:.08em}
+.galbar .hint{margin-left:auto;font-size:12px;color:var(--dim2);letter-spacing:.04em}
+
+/* ─── 对照表 ─────────────────────────────── */
+.cmp{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--bg2)}
+.cmp-h,.cmp-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1px;background:var(--line)}
+.cmp-h > span{
+  background:#0E1112;padding:14px 24px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--dim2)
+}
+.cmp-h > span:last-child{color:var(--brand-lt)}
+.cmp-row > p{margin:0;background:var(--bg2);padding:24px;font-size:14.5px;line-height:1.78}
+.cmp-row > p.a{color:var(--dim2)}
+.cmp-row > p.a b{color:var(--dim);font-weight:500}
+.cmp-row > p.b{color:#C6C8C4}
+.cmp-row > p.b b{color:var(--text);font-weight:600}
+.cmp-row:hover > p{background:#101314}
+.cmp-row > p.b{position:relative}
+.cmp-row > p.b::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:linear-gradient(180deg,var(--brand-lt),transparent);opacity:.5
+}
+
+/* ─── 能力 ───────────────────────────────── */
+.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.feat{background:var(--bg2);padding:32px 28px 34px;position:relative;transition:background .35s;overflow:hidden}
+.feat:hover{background:#101314}
+.feat::after{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .4s;
+  background:radial-gradient(circle 220px at var(--sx,50%) var(--sy,0%),
+             rgba(120,205,174,.1),transparent 70%);
+}
+.feat:hover::after{opacity:1}
+.feat .n{font-family:var(--mono);font-size:11px;color:var(--brand-dk);letter-spacing:.16em;margin-bottom:20px;
+  transition:color .35s}
+.feat:hover .n{color:var(--brand-lt)}
+.feat h3{margin:0 0 11px;font-size:16.5px;font-weight:600;letter-spacing:-.01em;position:relative}
+.feat p{margin:0;font-size:14px;color:var(--dim);line-height:1.75;position:relative}
+.feat p + p{margin-top:10px}
+.feat .say{color:#C6C8C4}
+.feat .ln{position:absolute;left:0;top:0;height:1px;width:0;background:var(--brand-lt);
+  transition:width .5s var(--ease);z-index:2}
+.feat:hover .ln{width:100%}
+
+/* ─── 规格 ───────────────────────────────── */
+.specwrap{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+.term{background:#0A0C0D;border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  font-family:var(--mono);font-size:12.5px;line-height:2.05}
+.term-bar{display:flex;align-items:center;gap:7px;padding:11px 15px;
+  border-bottom:1px solid var(--line);background:rgba(255,255,255,.018)}
+.term-bar i{width:9px;height:9px;border-radius:50%;background:#2A2E30}
+.term-bar i:first-child{background:#4A3033}
+.term-bar span{margin-left:8px;color:var(--dim2);font-size:11.5px}
+.term-body{padding:20px 22px 24px}
+.term-row{display:flex;justify-content:space-between;gap:20px;padding:3px 0}
+.term-row em{color:var(--dim2);font-style:normal}
+.term-row b{color:var(--text);font-weight:400}
+.term-row b.ok{color:var(--brand-lt)}
+.kv-row{display:flex;justify-content:space-between;align-items:baseline;gap:24px;
+  padding:19px 0;border-bottom:1px solid var(--line)}
+.kv-row span{color:var(--dim);font-size:14px}
+.kv-row b{font-size:19px;font-weight:600;letter-spacing:-.01em}
+.kv-row b i{font-style:normal;font-size:12.5px;color:var(--dim2);font-weight:400;margin-left:6px}
+
+/* ─── 下载 ───────────────────────────────── */
+.dl{background:linear-gradient(160deg,#0F1213,#0A0C0D);border:1px solid var(--line);
+  border-radius:22px;padding:clamp(30px,5vw,58px);position:relative;overflow:hidden}
+.dl::before{content:"";position:absolute;top:-140px;right:-100px;width:480px;height:480px;
+  border-radius:50%;background:radial-gradient(circle,rgba(78,156,130,.2),transparent 66%)}
+.dl-grid{position:relative;display:grid;grid-template-columns:1.32fr .68fr;gap:48px;align-items:center}
+.dl h3{margin:0 0 14px;font-size:clamp(23px,3vw,33px);font-weight:600;letter-spacing:-.02em}
+.dl p{margin:0 0 30px;color:var(--dim);font-size:15px;max-width:30em}
+.dl-btns{display:flex;gap:13px;flex-wrap:wrap;align-items:center}
+.dl-note{margin-top:22px;font-size:12.5px;color:var(--dim2);font-family:var(--mono)}
+/* 内测说明卡：放在下载卡最上面，先讲清楚状态，再给按钮 */
+.beta-note{
+  position:relative;border:1px solid rgba(240,201,138,.26);border-radius:14px;
+  background:linear-gradient(160deg,rgba(240,201,138,.07),rgba(240,201,138,.012));
+  padding:22px 24px;margin:0 0 36px;max-width:36em;
+}
+.beta-note h4{margin:0 0 14px;font-size:14.5px;font-weight:600;color:#F0DFC0;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;line-height:1.6}
+.beta-note ul{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.beta-note li{position:relative;padding-left:17px;font-size:13.5px;color:var(--dim);line-height:1.72}
+.beta-note li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;
+  border-radius:50%;background:rgba(240,201,138,.55)}
+.beta-note b{color:#C6C8C4;font-weight:500}
+.qrc{text-align:center}
+.qrc-box{display:inline-block;background:#fff;padding:14px;border-radius:16px;
+  box-shadow:0 22px 60px -22px rgba(0,0,0,.9)}
+.qrc-box img{width:158px;height:158px}
+.qrc p{margin:16px 0 0;font-size:12.5px;color:var(--dim2);font-family:var(--mono)}
+#dlstate{margin-top:20px;height:34px;display:flex;align-items:center;gap:11px;
+  font-family:var(--mono);font-size:12.5px;color:var(--brand-lt);opacity:0;transition:opacity .3s}
+#dlstate.on{opacity:1}
+.bar{flex:1;max-width:210px;height:3px;border-radius:9px;background:var(--line2);position:relative;overflow:hidden}
+.bar::after{content:"";position:absolute;inset:0;width:42%;border-radius:9px;
+  background:linear-gradient(90deg,transparent,var(--brand-lt),transparent);
+  animation:sweep 1.15s linear infinite}
+@keyframes sweep{from{transform:translateX(-100%)}to{transform:translateX(340%)}}
+
+/* ─── 步骤 ───────────────────────────────── */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;margin-top:56px}
+.step{position:relative;padding-top:26px;border-top:1px solid var(--line)}
+.step .i{font-family:var(--mono);font-size:11px;color:var(--brand-dk);letter-spacing:.16em;
+  position:absolute;top:-8px;left:0;background:linear-gradient(180deg,#0F1213,#0D0F10);padding-right:10px}
+.step h4{margin:0 0 8px;font-size:15px;font-weight:600}
+.step p{margin:0;font-size:13.5px;color:var(--dim);line-height:1.7}
+
+/* ─── 路线图 ─────────────────────────────── */
+.road{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.rcard{border:1px solid var(--line);border-radius:15px;padding:28px 26px;background:rgba(255,255,255,.018)}
+.rcard h4{margin:0 0 18px;font-size:14px;letter-spacing:.05em;display:flex;align-items:center;gap:10px}
+.rcard h4 i{width:7px;height:7px;border-radius:50%;font-style:normal}
+.rcard.now h4 i{background:var(--brand-lt);box-shadow:0 0 10px var(--brand-lt)}
+.rcard.next h4 i{background:var(--dim2)}
+.rcard.done h4 i{background:#F0C98A;box-shadow:0 0 10px rgba(240,201,138,.55)}
+.rcard.done li::before{background:rgba(240,201,138,.5)}
+.rcard ul{margin:0;padding:0}
+.rcard li{list-style:none;padding:9px 0 9px 18px;position:relative;font-size:14px;color:var(--dim)}
+.rcard li::before{content:"";position:absolute;left:0;top:19px;width:5px;height:5px;
+  border-radius:50%;background:var(--dim2)}
+.rcard.now li::before{background:var(--brand-dk)}
+
+/* ─── 页脚 ───────────────────────────────── */
+footer{border-top:1px solid var(--line)}
+.fin{max-width:1220px;margin:0 auto;padding:56px clamp(18px,4vw,54px) 44px;
+  display:flex;justify-content:space-between;align-items:flex-start;gap:36px;flex-wrap:wrap}
+.fin .fl{display:flex;flex-direction:column;gap:16px}
+.fin .fl img{height:23px;width:auto;align-self:flex-start;opacity:.92}
+.fin p{margin:0;font-size:13.5px;color:#A9ABA5;max-width:26em;line-height:1.8}
+.fin .fr{display:flex;gap:52px;flex-wrap:wrap}
+.fin .col h5{margin:0 0 14px;font-size:11.5px;letter-spacing:.16em;color:#9EA09A;
+  font-weight:500;text-transform:uppercase}
+.fin .col a{display:block;font-size:13.5px;color:#B8BAB4;padding:4px 0;transition:color .22s}
+.fin .col a:hover{color:var(--brand-lt)}
+.copy{max-width:1220px;margin:0 auto;padding:0 clamp(18px,4vw,54px) 40px;
+  font-size:12px;color:#868883;font-family:var(--mono)}
+
+/* ─── 放大看 ─────────────────────────────── */
+.lb{
+  position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:18px;padding:5vh 5vw;
+  background:rgba(4,5,6,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .32s var(--ease),visibility .32s var(--ease);
+}
+.lb.on{opacity:1;visibility:visible;pointer-events:auto}
+.lb img{
+  max-height:80vh;max-width:min(460px,92vw);width:auto;border-radius:26px;
+  box-shadow:0 0 0 1px rgba(255,255,255,.1),0 40px 90px -30px rgba(0,0,0,.95);
+  transform:scale(.94);transition:transform .38s var(--ease);
+}
+.lb.on img{transform:none}
+.lb .cap{font-family:var(--mono);font-size:12.5px;color:var(--dim);letter-spacing:.06em}
+.lb .x{
+  position:absolute;top:22px;right:24px;width:40px;height:40px;border-radius:11px;cursor:pointer;
+  border:1px solid var(--line2);background:rgba(255,255,255,.04);color:var(--text);
+  font-size:20px;line-height:1;display:flex;align-items:center;justify-content:center;
+  transition:border-color .25s,background .25s;
+}
+.lb .x:hover{border-color:rgba(120,205,174,.55);background:rgba(78,156,130,.12)}
+.lb .nav{display:flex;gap:12px}
+.lb .nav button{
+  padding:9px 20px;border-radius:10px;cursor:pointer;font-size:13px;
+  border:1px solid var(--line2);background:rgba(255,255,255,.04);color:var(--text);
+  transition:border-color .25s,background .25s;
+}
+.lb .nav button:hover{border-color:rgba(120,205,174,.55);background:rgba(78,156,130,.12)}
+
+/* ─── 揭示 ───────────────────────────────── */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .75s var(--ease),transform .75s var(--ease)}
+.rv.in{opacity:1;transform:none}
+/* 标题用「升起」：从一条线后面浮出来，比单纯淡入更像印刷 */
+.rise{
+  opacity:0;transform:translateY(18px);clip-path:inset(0 0 105% 0);
+  transition:opacity .55s var(--ease),transform .95s var(--ease),clip-path 1.05s var(--ease);
+}
+.rise.in{opacity:1;transform:none;clip-path:inset(0 0 0 0)}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+/* ─── 响应式 ─────────────────────────────── */
+@media (max-width:1000px){
+  .feats{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .specwrap{grid-template-columns:1fr;gap:30px}
+  .dl-grid{grid-template-columns:1fr;gap:38px}
+  .qrc{text-align:left}
+}
+@media (max-width:860px){
+  header{padding:13px 18px;gap:14px}
+  header nav{display:none}
+  .brand-txt{display:none}
+  .hero{grid-template-columns:1fr;gap:34px;padding:92px 18px 58px}
+  /* 手机端把「话」放前头。
+     原来是 .hero-r{order:-1}，整个第一屏被截图占满，主标题被挤到第二屏 ——
+     手机上访问的人先看到一张图，再往下滚才知道这是干什么的。
+     现在：标题 → 说明 → 按钮 → 手机。 */
+  .hero-r{order:2}
+  .phone-in{width:min(238px,60vw);border-radius:32px;
+    box-shadow:0 0 0 8px #141618,0 0 0 9px rgba(255,255,255,.09),
+               0 34px 70px -26px rgba(0,0,0,.9),0 0 70px -28px rgba(78,156,130,.45)}
+  .phone-in img,.phone-in::after{border-radius:32px}
+  h1{min-height:2.72em}
+  .lede{font-size:15.5px}
+  .cta{flex-direction:column;align-items:stretch}
+  .cta .btn{width:100%}
+  .feats{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr;gap:30px}
+  .road{grid-template-columns:1fr}
+  .gal{gap:20px;perspective:none}
+  .gitem{width:min(216px,62vw)}
+  /* 单列后没有表头了，每一段自己带标签，否则读者不知道哪段在说谁。
+     注意：基础规则 .cmp-row > p.b::before 里有 content:""（那条 2px 竖线），
+     优先级比通用规则高，所以这里必须把它整套重写一遍，只 reset 位置是不够的。 */
+  .cmp-h{display:none}
+  .cmp-row{grid-template-columns:1fr}
+  .cmp-row > p::before{
+    content:attr(data-tag);display:block;font-family:var(--mono);font-size:10.5px;
+    letter-spacing:.16em;color:var(--brand-dk);margin-bottom:9px}
+  .cmp-row > p.a::before{color:#6A6D68}
+  .cmp-row > p.b::before{
+    position:static;width:auto;background:none;opacity:1;
+    content:attr(data-tag);display:block;font-family:var(--mono);font-size:10.5px;
+    letter-spacing:.16em;color:var(--brand-lt);margin-bottom:9px}
+  .cmp-row > p{padding:20px}
+  .galbar .hint{display:none}
+  .fin{flex-direction:column;gap:40px}
+  .fin .fr{gap:40px}
+  .dl{border-radius:18px}
+  .dl-btns{flex-direction:column;align-items:stretch}
+  .dl-btns .btn{width:100%}
+  .qrc-box img{width:142px;height:142px}
+  .phone .badge{display:none}
+  .marq-track{gap:34px}
+  .marq-track span{gap:34px}
+}
+@media (max-width:420px){
+  h1{font-size:29px}
+  .gitem{width:78vw}
+}
+@media (hover:none){
+  .phone-in{transform:none!important}
+  .btn:hover{transform:none}
+  .gitem:hover .ph{transform:none;
+    box-shadow:0 0 0 7px #141618,0 0 0 8px rgba(255,255,255,.08),0 30px 60px -24px rgba(0,0,0,.9)}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .rv,.rise{opacity:1;transform:none;clip-path:none}
+}
+</style>
+</head>
+<body>
+
+<div class="bg">
+  <div class="grid" id="bggrid"></div>
+  <canvas id="stars"></canvas>
+  <div class="glow"></div>
+  <div class="beam"></div>
+  <div class="vig"></div>
+</div>
+<div id="prog"></div>
+
+<header id="hdr">
+  <a class="brand" href="#top">
+    <img src="assets/logo-word.png" alt="乐子小说">
+    <span class="brand-txt">LEZI NOVEL</span>
+    <span class="beta">内测版</span>
+  </a>
+  <nav id="nav">
+    <a href="#gallery">界面</a>
+    <a href="#why">为什么</a>
+    <a href="#features">能力</a>
+    <a href="#spec">版本</a>
+    <a href="#download">下载</a>
+  </nav>
+  <a class="btn btn-p btn-sm hdr-cta mag" href="#download">下载 APK</a>
+</header>
+
+<main id="top">
+
+  <div class="hero">
+    <div class="hero-l">
+      <div class="chip rv"><span class="dot"></span>内测版本 · Android 8.0 以上 · 写作离线</div>
+      <h1 class="rise"><span id="tw"></span><i class="caret"></i></h1>
+      <div class="lede rv d2">
+        <p>写作是件孤独的活。你真正想要的，是一个读过你全部草稿的人 ——
+           他记得你在第三章埋下的那盏灯，知道你写到哪了，也记得你本来想去哪。</p>
+        <p>乐子小说想让 AI 成为这个人：读得懂你的大纲、正文和设定，不抢你的笔，
+           只在你抬头的时候开口。续写、圆场、考据、起名，各有分工，各说各的话。</p>
+        <p class="kicker">不是「一键生成小说」。是<b>让 AI 像人一样，陪你写完这一部长篇</b>。</p>
+      </div>
+      <div class="cta rv d3">
+        <a class="btn btn-p mag" id="dl1" href="lezi-novel-0.2.0.apk" download>下载内测版安装包</a>
+        <a class="btn mag" href="#gallery">先看看它长什么样</a>
+      </div>
+    </div>
+    <div class="hero-r rv d2">
+      <div class="phone">
+        <div class="phone-in" id="tilt">
+          <img src="assets/shot-editor.png" alt="写作编辑器" fetchpriority="high">
+          <div class="badge b1">卷 · 章</div>
+          <div class="badge b2">写作离线可用</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="marq">
+    <div class="marq-track" id="marq">
+      <span>只管写，剩下的交给它</span><span>章号自己跟上</span><span>大纲就在手边</span>
+      <span>删错了捡得回来</span><span>不注册，不登录</span><span>稿子只在你手机上</span>
+      <span>写作全程离线</span><span>一部长篇写到底</span>
+      <span>只管写，剩下的交给它</span><span>章号自己跟上</span><span>大纲就在手边</span>
+      <span>删错了捡得回来</span><span>不注册，不登录</span><span>稿子只在你手机上</span>
+      <span>写作全程离线</span><span>一部长篇写到底</span>
+    </div>
+  </div>
+
+  <section id="gallery">
+    <div class="eyebrow rise">Interface</div>
+    <h2 class="rise d1">它现在长这样</h2>
+    <p class="sub rise d2">上面那些话，下面是它当下的样子 —— 六屏都是实机截图，不是效果图。左右滑动看全部，点任意一张可以放大。</p>
+    <div class="galwrap rv d2">
+      <div class="gal" id="gal">
+        <figure class="gitem" data-cap="书架 · 作品、进度与字数">
+          <div class="ph"><img src="assets/shot-shelf.png" alt="书架" loading="lazy"></div>
+          <figcaption><b>书架</b>作品 · 进度 · 字数</figcaption>
+        </figure>
+        <figure class="gitem" data-cap="作品详情 · 卷 → 章 的展开">
+          <div class="ph"><img src="assets/shot-detail.png" alt="作品详情" loading="lazy"></div>
+          <figcaption><b>作品详情</b>卷 → 章 的展开</figcaption>
+        </figure>
+        <figure class="gitem" data-cap="正文编辑 · 衬线、首行缩进、两端对齐">
+          <div class="ph"><img src="assets/shot-editor.png" alt="编辑器" loading="lazy"></div>
+          <figcaption><b>正文编辑</b>衬线 · 首行缩进 · 两端对齐</figcaption>
+        </figure>
+        <figure class="gitem" data-cap="大纲设定 · 任意层级，每层都能写">
+          <div class="ph"><img src="assets/shot-docs.png" alt="大纲设定" loading="lazy"></div>
+          <figcaption><b>大纲设定</b>任意层级，每层都能写</figcaption>
+        </figure>
+        <figure class="gitem" data-cap="写作统计 · 今日、连续与最近 14 天">
+          <div class="ph"><img src="assets/shot-mine.png" alt="我的" loading="lazy"></div>
+          <figcaption><b>写作统计</b>今日 · 连续 · 最近 14 天</figcaption>
+        </figure>
+        <figure class="gitem" data-cap="灵感箱 · 先记下来，再决定归给谁">
+          <div class="ph"><img src="assets/shot-insp.png" alt="灵感箱" loading="lazy"></div>
+          <figcaption><b>灵感箱</b>先记下来，再决定归给谁</figcaption>
+        </figure>
+      </div>
+      <div class="galbar">
+        <button id="gprev" aria-label="上一屏">‹</button>
+        <button id="gnext" aria-label="下一屏">›</button>
+        <span class="idx" id="galidx">01 / 06</span>
+        <span class="hint">← → 也能翻，点图放大</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="why">
+    <div class="eyebrow rise">Why</div>
+    <h2 class="rise d1">换一个地方写，差在哪</h2>
+    <p class="sub rise d2">理想落到具体，就是下面三件事。左边是通行做法，右边是乐子小说怎么做。</p>
+    <div class="cmp rv d2">
+      <div class="cmp-h"><span>通行做法</span><span>乐子小说</span></div>
+      <div class="cmp-row">
+        <p class="a" data-tag="通行做法">中间漏了一章，插回去 —— <b>后面两百多个章号得手动一个个往后挪</b>，改完还容易数错。</p>
+        <p class="b" data-tag="乐子小说"><b>章号是算出来的，不是存下来的。</b>插入一章、调整卷的先后，后面的编号自己跟上。</p>
+      </div>
+      <div class="cmp-row">
+        <p class="a" data-tag="通行做法">大纲在一棵树里，正文在另一棵树里。<b>写到一半要找「那个设定」，得先退出正在写的地方。</b></p>
+        <p class="b" data-tag="乐子小说"><b>大纲、卷纲、人物、设定和正文在同一个界面</b>，用同一种手势唤出，光标不丢。</p>
+      </div>
+      <div class="cmp-row">
+        <p class="a" data-tag="通行做法">删掉一段就是删掉了。<b>想找回来，只能翻旧备份，还不一定翻得到。</b></p>
+        <p class="b" data-tag="乐子小说"><b>删除先进回收站，能还原回原来的位置。</b>另外还有定时快照和导出 JSON 两条退路。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="eyebrow rise">Capabilities</div>
+    <h2 class="rise d1">把长篇需要的东西，放进同一个界面</h2>
+    <p class="sub rise d2">不是功能堆砌。每一条都对着一个具体的瞬间 —— 写到一半想翻大纲、写完一章想知道今天写了多少、换台手机不想丢稿子。</p>
+    <div class="feats rv d2">
+      <div class="feat"><div class="ln"></div><div class="n">01 / TEXT</div>
+        <h3>卷 · 章，就两级</h3>
+        <p class="say">正文只有两层：卷下面是章。</p>
+        <p>章号由位置算出来，你永远不用手填。插入一章、调换卷序，后面几百个章号不用改，也不会数错。</p></div>
+      <div class="feat"><div class="ln"></div><div class="n">02 / OUTLINE</div>
+        <h3>大纲不再住在别处</h3>
+        <p class="say">大纲、卷纲、人物、设定在同一棵树里。</p>
+        <p>每一层都能直接写正文，也没有「文件夹」这种东西挡在中间。想到哪一层就写哪一层。</p></div>
+      <div class="feat"><div class="ln"></div><div class="n">03 / STATS</div>
+        <h3>今天写了多少，一眼看到</h3>
+        <p class="say">今日字数、连续天数、最近十四天。</p>
+        <p>只数正文 —— 大纲和设定的字不算进来，两个口径不会互相打架。统计跟着书走，换书就换一套。</p></div>
+      <div class="feat"><div class="ln"></div><div class="n">04 / BACKUP</div>
+        <h3>删错了，能捡回来</h3>
+        <p class="say">删掉的东西先进回收站，什么时候都能还原回原位。</p>
+        <p>此外还有三条退路：导出 JSON、加密备份、定时快照。换手机就把备份文件带过去。</p></div>
+      <div class="feat"><div class="ln"></div><div class="n">05 / AI</div>
+        <h3>AI 是你的，不是平台的</h3>
+        <p class="say">续写、结构建议、起名考据分成不同智能体，各带自己的提示词。</p>
+        <p>中转站地址和模型由你自己填 —— 走你自己的通道，稿子不经过我们的服务器。</p></div>
+      <div class="feat"><div class="ln"></div><div class="n">06 / FOCUS</div>
+        <h3>写作的时候，世界安静</h3>
+        <p class="say">写作本身完全离线，不需要注册，也不需要登录。</p>
+        <p>参考内容、会话列表、AI 对话用同一种手势唤出，滑一下就回去，光标还在原来的位置。</p></div>
+    </div>
+  </section>
+
+  <section id="spec">
+    <div class="specwrap">
+      <div>
+        <div class="eyebrow rise">Build</div>
+        <h2 class="rise d1">这一版的真实规格</h2>
+        <p class="sub rise d2" style="margin-bottom:36px">
+          没有隐藏的「付费版」，也没有要登录才能用的功能。写下来的东西只存在你自己手机上。
+        </p>
+        <div class="kv rv d3">
+          <div class="kv-row"><span>安装包大小</span><b data-to="8.9" data-dec="1">8.9<i>MB</i></b></div>
+          <div class="kv-row"><span>最低系统</span><b>Android 8.0<i>API 26</i></b></div>
+          <div class="kv-row"><span>目标系统</span><b>Android 16<i>API 36</i></b></div>
+          <div class="kv-row"><span>需要联网</span><b>仅 AI 功能<i>写作离线</i></b></div>
+          <div class="kv-row"><span>要登录吗</span><b>不要<i>没有账号体系</i></b></div>
+        </div>
+      </div>
+      <div class="term rv d2">
+        <div class="term-bar"><i></i><i></i><i></i><span>lezi-novel — build info</span></div>
+        <div class="term-body">
+          <div class="term-row"><em>package</em><b>com.lezi.novel</b></div>
+          <div class="term-row"><em>versionName</em><b>0.2.0</b></div>
+          <div class="term-row"><em>versionCode</em><b>2</b></div>
+          <div class="term-row"><em>minSdk / targetSdk</em><b>26 / 36</b></div>
+          <div class="term-row"><em>abi</em><b>universal</b></div>
+          <div class="term-row"><em>md5</em><b>96d42fd9…1e7a</b></div>
+          <div class="term-row"><em>size</em><b>9,316,941 B</b></div>
+          <div class="term-row"><em>built</em><b>2026-10-12 20:20</b></div>
+          <div class="term-row"><em>signing</em><b class="ok">release ✓</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="download" style="padding-top:0">
+    <div class="dl rv">
+      <div class="beta-note">
+        <h4><span class="beta">内测版</span>现在能用来写长篇了，但还在补齐</h4>
+        <ul>
+          <li><b>升级会频繁。</b>装好之后可以直接在应用里检查更新，不必每次回这个页面重新下载。</li>
+          <li><b>数据结构还可能调整。</b>重要的稿子请自己导出一份 JSON 备份，别只留一份在手机上。</li>
+          <li><b>装过更早的 0.1.0 的话，需要先卸载再装这一版</b> —— 从这一版起换成正式签名，旧包盖不上去。</li>
+        </ul>
+      </div>
+      <div class="dl-grid">
+        <div>
+          <h3>下载乐子小说 · 内测版</h3>
+          <p>点下面的按钮开始下载。下载完成后点开文件，系统会问一次是否允许安装 —— 允许，然后下一步即可。</p>
+          <div class="dl-btns">
+            <a class="btn btn-p mag" id="dl2" href="lezi-novel-0.2.0.apk" download>下载 APK · 8.9 MB</a>
+            <a class="btn mag" href="#top">回到顶部</a>
+          </div>
+          <div id="dlstate"><span id="dlmsg">正在下载…</span><span class="bar"></span></div>
+          <div class="dl-note">lezi-novel-0.2.0.apk · 9,316,941 bytes · md5 96d42fd9…1e7a</div>
+        </div>
+        <div class="qrc">
+          <div class="qrc-box"><img src="assets/qr.png" alt="扫码打开本页" loading="lazy"></div>
+          <p>手机扫码打开本页</p>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step rv d1"><span class="i">STEP 01</span><h4>点下载</h4><p>浏览器开始下载安装包，约 8.9 MB。</p></div>
+        <div class="step rv d2"><span class="i">STEP 02</span><h4>打开文件</h4><p>在通知栏或「下载」里点开这个 apk。</p></div>
+        <div class="step rv d3"><span class="i">STEP 03</span><h4>允许安装</h4><p>系统提示时，允许「安装未知应用」。</p></div>
+        <div class="step rv d4"><span class="i">STEP 04</span><h4>开始写</h4><p>装好之后打开「我的 → 检查更新」，以后升级在应用里就能完成。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="eyebrow rise">Roadmap</div>
+    <h2 class="rise d1">现在到哪一步了</h2>
+    <p class="sub rise d2">这是内测版，能真正用来写长篇，但还有几块没做完 —— 写在这里，免得你装上去才发现。</p>
+    <div class="road">
+      <div class="rcard done rv d1">
+        <h4><i></i>这一版刚做完</h4>
+        <ul>
+          <li>应用内检查更新 —— 在「我的」里点一下，直接在 App 里下载并安装新版</li>
+          <li>正式签名 —— 之后每一版都能覆盖安装、稿子不丢</li>
+          <li>六屏界面与正文编辑器的这一轮打磨</li>
+        </ul>
+      </div>
+      <div class="rcard now rv d2">
+        <h4><i></i>正在做</h4>
+        <ul>
+          <li>AI 对话通道 —— 中转站与模型可以配了，对话历史还没接上</li>
+          <li>智能体提示词的细化，让不同职责的回复更分得开</li>
+          <li>导出稿的样式模板</li>
+        </ul>
+      </div>
+      <div class="rcard next rv d3">
+        <h4><i></i>还没开始</h4>
+        <ul>
+          <li>深色模式（现在是纸感浅色，只有一个主题）</li>
+          <li>多设备同步 —— 目前靠手动导出 / 导入</li>
+          <li>上架应用商店，取代现在的网页分发</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="fin">
+    <div class="fl">
+      <img src="assets/logo-word.png" alt="乐子小说">
+      <p>想做一个读过你全部草稿的写作搭档 —— 像人一样，陪你把这部长篇写完。</p>
+    </div>
+    <div class="fr">
+      <div class="col">
+        <h5>本页</h5>
+        <a href="#gallery">界面</a>
+        <a href="#why">为什么</a>
+        <a href="#features">能力</a>
+        <a href="#spec">版本</a>
+        <a href="#download">下载</a>
+      </div>
+      <div class="col">
+        <h5>其他</h5>
+        <a href="lezi-novel-0.2.0.apk" download>直接下载 APK</a>
+        <a href="#top">回到顶部</a>
+      </div>
+    </div>
+  </div>
+  <div class="copy">乐子小说 · com.lezi.novel · v0.2.0 · 内测版 · Android 8.0+</div>
+</footer>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="放大查看截图">
+  <button class="x" id="lbx" aria-label="关闭">×</button>
+  <img id="lbi" alt="">
+  <div class="cap" id="lbc"></div>
+  <div class="nav">
+    <button id="lbp">上一屏</button>
+    <button id="lbn">下一屏</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var rm   = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mob  = matchMedia('(max-width: 860px)').matches;
+  var fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var root = document.documentElement;
+
+  /* ─── 打字机 ───────────────────────────── */
+  var lines = ['像人一样，陪你写作。','读过你写的每个字。','他懂结构，也懂沉默。'];
+  var tw = document.getElementById('tw');
+  if (rm || !tw){ if(tw) tw.textContent = lines[0]; }
+  else {
+    var li=0, ci=0, del=false;
+    (function tick(){
+      var s = lines[li];
+      if(!del){
+        ci++; tw.textContent = s.slice(0,ci);
+        if(ci === s.length){ del = true; return setTimeout(tick, 2200); }
+        return setTimeout(tick, 105);
+      }
+      ci--; tw.textContent = s.slice(0,ci);
+      if(ci === 0){ del = false; li = (li+1) % lines.length; return setTimeout(tick, 340); }
+      return setTimeout(tick, 42);
+    })();
+  }
+
+  /* ─── 顶栏 / 进度 / 导航高亮 ────────────── */
+  var hdr = document.getElementById('hdr'), prog = document.getElementById('prog');
+  var navLinks = [].slice.call(document.querySelectorAll('#nav a'));
+  var spyTargets = navLinks.map(function(a){
+    return document.querySelector(a.getAttribute('href'));
+  });
+  function onScroll(){
+    var y = scrollY, h = document.documentElement.scrollHeight - innerHeight;
+    hdr.classList.toggle('solid', y > 30);
+    prog.style.width = (h > 0 ? (y/h*100) : 0) + '%';
+
+    /* 导航高亮：取当前越过锚点最多的那一节 */
+    var best = -1;
+    for(var i=0;i<spyTargets.length;i++){
+      var el = spyTargets[i]; if(!el) continue;
+      if(el.getBoundingClientRect().top <= innerHeight*0.34) best = i;
+    }
+    for(var j=0;j<navLinks.length;j++) navLinks[j].classList.toggle('active', j === best);
+  }
+
+  /* ⚠️ 一律用「时间节流」而不是 rAF 闩锁。rAF 闩锁一旦有一个回调没被执行
+     （后台标签页、省电模式、无头环境都会发生），闩锁就永久卡死，
+     后续所有滚动事件被直接丢掉 —— 实测踩到过，页面看上去像「滚了没反应」。 */
+  function throttle(fn, ms){
+    var last = 0;
+    return function(){
+      var now = Date.now();
+      if(now - last < ms) return;
+      last = now;
+      fn();
+    };
+  }
+  var thScroll   = throttle(onScroll, 40);
+  var thParallax = throttle(onParallax, 16);
+  var thReveal   = throttle(revealCheck, 45);
+  var thFlow     = throttle(flow, 30);
+  addEventListener('scroll', thScroll, {passive:true});
+  addEventListener('resize', function(){ thScroll(); thFlow(); });
+
+  /* ─── 光晕 / 3D / 滚动视差 ─────────────── */
+  var tilt = document.getElementById('tilt');
+  var bggrid = document.getElementById('bggrid');
+  var heroEl = document.querySelector('.hero');
+  var mx = 0, my = 0, hasPointer = false;
+
+  if(!rm && fine){
+    addEventListener('mousemove', function(e){
+      mx = e.clientX; my = e.clientY;
+      root.style.setProperty('--mx', mx + 'px');
+      root.style.setProperty('--my', my + 'px');
+      hasPointer = true;
+      if(tilt){
+        var r = tilt.getBoundingClientRect();
+        var cx = r.left + r.width/2, cy = r.top + r.height/2;
+        var dx = Math.max(-1, Math.min(1, (e.clientX-cx)/(innerWidth/2)));
+        var dy = Math.max(-1, Math.min(1, (e.clientY-cy)/(innerHeight/2)));
+        var vis = r.top < innerHeight && r.bottom > 0;
+        /* 滚出去一半之后就不再接管，交给滚动视差，避免两套 transform 打架 */
+        tilt.dataset.hovered = vis ? '1' : '';
+        if(!tilt.dataset.parallax){
+          tilt.style.transform = vis
+            ? 'rotateY(' + (dx*11).toFixed(2) + 'deg) rotateX(' + (-dy*7).toFixed(2) + 'deg)'
+            : '';
+        }
+      }
+    }, {passive:true});
+  }
+
+  /* 滚动时：手机往下沉一点；网格反向漂 —— 让「滚」这件事有反应 */
+  function onParallax(){
+    if(!heroEl || rm) return;
+    var y = scrollY;
+    var hr = heroEl.getBoundingClientRect();
+    var gone = hr.bottom <= 0;
+    var k = Math.max(0, Math.min(1, y / (innerHeight*0.9)));   /* 先算出来，两个分支都用 */
+    if(tilt && fine){
+      var inHero = hr.bottom > innerHeight*0.15;
+      var t;
+      if(inHero){
+        t = 'translateY(' + (k*54).toFixed(1) + 'px) rotateX(' + (k*5).toFixed(2) + 'deg)';
+        /* 鼠标也在管这个元素时，把两者叠起来 */
+        if(tilt.dataset.hovered === '1'){
+          var m = tilt.style.transform.match(/rotateY\(([-\d.]+)deg\)\s*rotateX\(([-\d.]+)deg\)/);
+          if(m) t = 'rotateY(' + m[1] + 'deg) rotateX(' + m[2] + 'deg) ' + t;
+        }
+      } else {
+        t = 'translateY(' + (k*54).toFixed(1) + 'px)';
+      }
+      tilt.style.transform = t;
+    }
+    if(bggrid && !gone){
+      bggrid.style.transform = 'translateY(' + (y*0.06).toFixed(1) + 'px)';
+    }
+  }
+  if(!rm) addEventListener('scroll', thParallax, {passive:true});
+
+  /* ─── 星点 ─────────────────────────────── */
+  var cv = document.getElementById('stars');
+  if(cv && !rm){
+    var ctx = cv.getContext('2d'), pts = [], dpr = Math.min(devicePixelRatio||1, 2), run = true;
+    function size(){
+      cv.width = innerWidth*dpr; cv.height = innerHeight*dpr;
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      var n = mob ? 24 : 52;
+      pts = [];
+      for(var i=0;i<n;i++) pts.push({
+        x: Math.random()*innerWidth, y: Math.random()*innerHeight,
+        r: Math.random()*1.25+.35, s: Math.random()*.16+.035,
+        a: Math.random()*.5+.12, p: Math.random()*Math.PI*2
+      });
+    }
+    function draw(t){
+      if(!run) return;
+      ctx.clearRect(0,0,innerWidth,innerHeight);
+      for(var i=0;i<pts.length;i++){
+        var p = pts[i];
+        p.y -= p.s; if(p.y < -4){ p.y = innerHeight+4; p.x = Math.random()*innerWidth; }
+        var al = p.a * (.65 + .35*Math.sin(t/1400 + p.p));
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, 6.2832);
+        ctx.fillStyle = 'rgba(150,225,200,' + al.toFixed(3) + ')';
+        ctx.fill();
+      }
+      requestAnimationFrame(draw);
+    }
+    size();
+    addEventListener('resize', size);
+    document.addEventListener('visibilitychange', function(){ run = !document.hidden; if(run) requestAnimationFrame(draw); });
+    requestAnimationFrame(draw);
+  }
+
+  /* ─── 揭示：不押在 IntersectionObserver 上 ─────────
+     实测这个环境里 IO 回调一次都没触发过。全文几十个元素全靠它
+     会直接导致「滚下去一片空白」，所以改成自己算位置：
+     进入视口就加 .in，滚动/缩放/加载时各查一次，成本可以忽略。 */
+  var pending = [].slice.call(document.querySelectorAll('.rv, .rise')).filter(function(el){
+    return !el.closest('.hero');           /* 首屏有自己的节拍，见下 */
+  });
+  var counting = [].slice.call(document.querySelectorAll('[data-to]'));
+
+  function inView(el, bias){
+    var r = el.getBoundingClientRect();
+    /* 判据是「有没有进过视口」，而不是「现在在不在视口里」。
+       原来写了 r.bottom > 0，于是用导航栏锚点跳转时（一次性滚过很长一段），
+       被跳过的中间区块就被永远判为不可见，停在 opacity:0 —— 用户往回滚才补上。
+       实测移动端更明显（页面 8500px 高，一次跳转能跳过整节）。 */
+    return r.top < innerHeight * (bias || 0.92);
+  }
+  function runCount(el){
+    var to = parseFloat(el.dataset.to), dec = parseInt(el.dataset.dec || '0', 10);
+    var sfx = el.querySelector('i') ? el.querySelector('i').outerHTML : '';
+    if(rm){ el.innerHTML = to.toFixed(dec) + sfx; return; }
+    var t0 = performance.now(), done = false;
+    (function step(ts){
+      var k = Math.min(1, (ts - t0) / 1100), e2 = 1 - Math.pow(1 - k, 3);
+      el.innerHTML = (to * e2).toFixed(dec) + sfx;
+      if(k < 1) requestAnimationFrame(step); else done = true;
+    })(t0);
+    /* rAF 若被挂起，数字不能永远停在半路 */
+    setTimeout(function(){ if(!done) el.innerHTML = to.toFixed(dec) + sfx; }, 1300);
+  }
+  function revealCheck(){
+    var rest = [], i;
+    for(i = 0; i < pending.length; i++){
+      if(inView(pending[i])) pending[i].classList.add('in');
+      else rest.push(pending[i]);
+    }
+    pending = rest;
+    var rest2 = [];
+    for(i = 0; i < counting.length; i++){
+      if(inView(counting[i], .95)) runCount(counting[i]);
+      else rest2.push(counting[i]);
+    }
+    counting = rest2;
+  }
+  addEventListener('scroll', thReveal, {passive:true});
+  addEventListener('load', revealCheck);
+  revealCheck();
+
+  /* 首屏：按节拍演一遍，不等滚动 */
+  var heroEls = [].slice.call(document.querySelectorAll('.hero .rv'));
+  heroEls.forEach(function(el, i){
+    setTimeout(function(){ el.classList.add('in'); }, 70 + i*95);
+  });
+  var heroH1 = document.querySelector('.hero h1');
+  if(heroH1) setTimeout(function(){ heroH1.classList.add('in'); }, 60);
+
+  /* 多道保险：布局变高、图片撑开、定时器/帧任一环节出问题，都不留空白 */
+  setTimeout(revealCheck, 320);
+  setTimeout(function(){
+    revealCheck();
+    heroEls.forEach(function(el){ el.classList.add('in'); });
+    if(heroH1) heroH1.classList.add('in');
+    if(tw && !tw.textContent) tw.textContent = lines[0];
+  }, 1400);
+  setTimeout(function(){ revealCheck(); heroEls.forEach(function(el){ el.classList.add('in'); }); }, 3200);
+
+  /* ─── 走马灯：跟着滚动速度走 ───────────── */
+  var marq = document.getElementById('marq');
+  if(marq && !rm){
+    var mx0 = 0, half = 0, lastY = scrollY, boost = 0, mrun = true;
+    function msize(){ half = marq.scrollWidth / 2; }
+    msize();
+    addEventListener('resize', msize);
+    document.addEventListener('visibilitychange', function(){ mrun = !document.hidden; });
+    var last = performance.now();
+    (function mloop(now){
+      var dt = Math.min(64, now - last) / 1000; last = now;
+      if(mrun && half){
+        /* 滚动越快，走字越快；松手后 boost 衰减回去 */
+        boost *= 0.9;
+        mx0 += (34 + boost) * dt;
+        if(mx0 >= half) mx0 -= half;
+        marq.style.transform = 'translate3d(' + (-mx0).toFixed(2) + 'px,0,0)';
+      }
+      requestAnimationFrame(mloop);
+    })(last);
+    addEventListener('scroll', function(){
+      var d = Math.abs(scrollY - lastY); lastY = scrollY;
+      boost = Math.min(900, boost + d * 3.2);
+    }, {passive:true});
+  }
+
+  /* ─── 画廊：缩放跟随 + 计数 + 箭头 + 放大 ─ */
+  var gal = document.getElementById('gal');
+  var gitems = gal ? [].slice.call(gal.querySelectorAll('.gitem')) : [];
+  var gidx = document.getElementById('galidx');
+  function pad2(n){ return (n<10?'0':'') + n; }
+
+  function flow(){
+    if(!gal || rm) return;
+    var gr = gal.getBoundingClientRect();
+    var c = gr.left + gr.width/2;
+    for(var i=0;i<gitems.length;i++){
+      var it = gitems[i], r = it.getBoundingClientRect();
+      var d = (r.left + r.width/2 - c) / (gr.width * 0.5);
+      d = Math.max(-1.8, Math.min(1.8, d));
+      var ad = Math.min(1, Math.abs(d));
+      var s = 1 - ad * 0.10;
+      it.style.transform = mob
+        ? 'scale(' + s.toFixed(3) + ')'
+        : 'scale(' + s.toFixed(3) + ') rotateY(' + (-d*9).toFixed(2) + 'deg)';
+      it.style.opacity = (1 - ad * 0.24).toFixed(3);
+    }
+    if(gidx){
+      var step0 = gitems.length > 1 ? (gitems[1].offsetLeft - gitems[0].offsetLeft) : 1;
+      var n = Math.round(gal.scrollLeft / step0) + 1;
+      n = Math.max(1, Math.min(gitems.length, n));
+      gidx.textContent = pad2(n) + ' / ' + pad2(gitems.length);
+    }
+  }
+  if(gal){
+    gal.addEventListener('scroll', thFlow, {passive:true});
+    addEventListener('resize', thFlow);
+
+    function step(dir){
+      var stp = gitems.length > 1 ? (gitems[1].offsetLeft - gitems[0].offsetLeft) : gal.clientWidth;
+      gal.scrollBy({left: dir * stp, behavior: rm ? 'auto' : 'smooth'});
+    }
+    var bp = document.getElementById('gprev'), bn = document.getElementById('gnext');
+    if(bp) bp.addEventListener('click', function(){ step(-1); });
+    if(bn) bn.addEventListener('click', function(){ step(1); });
+
+    addEventListener('keydown', function(e){
+      var r = gal.getBoundingClientRect();
+      if(r.bottom < 0 || r.top > innerHeight) return;
+      if(document.getElementById('lb').classList.contains('on')) return;
+      if(e.key === 'ArrowRight'){ step(1); }
+      else if(e.key === 'ArrowLeft'){ step(-1); }
+    });
+
+    /* 放大 */
+    var lb = document.getElementById('lb'), lbi = document.getElementById('lbi'), lbc = document.getElementById('lbc');
+    var cur = 0;
+    function show(i){
+      if(i < 0) i = gitems.length - 1;
+      if(i >= gitems.length) i = 0;
+      cur = i;
+      var img = gitems[i].querySelector('img');
+      lbi.src = img.getAttribute('src');
+      lbi.alt = img.getAttribute('alt') || '';
+      lbc.textContent = gitems[i].dataset.cap || '';
+      lb.classList.add('on');
+      document.body.classList.add('lock');
+    }
+    function hide(){
+      lb.classList.remove('on');
+      document.body.classList.remove('lock');
+    }
+    gitems.forEach(function(it, i){ it.addEventListener('click', function(){ show(i); }); });
+    document.getElementById('lbx').addEventListener('click', hide);
+    document.getElementById('lbp').addEventListener('click', function(){ show(cur-1); });
+    document.getElementById('lbn').addEventListener('click', function(){ show(cur+1); });
+    lb.addEventListener('click', function(e){ if(e.target === lb || e.target === lbi) hide(); });
+    addEventListener('keydown', function(e){
+      if(!lb.classList.contains('on')) return;
+      if(e.key === 'Escape') hide();
+      else if(e.key === 'ArrowRight') show(cur+1);
+      else if(e.key === 'ArrowLeft') show(cur-1);
+    });
+  }
+
+  /* ─── 磁吸按钮（只给精确指针） ─────────── */
+  if(!rm && fine){
+    document.querySelectorAll('.mag').forEach(function(el){
+      el.addEventListener('mousemove', function(e){
+        var r = el.getBoundingClientRect();
+        var dx = (e.clientX - (r.left + r.width/2)) / r.width;
+        var dy = (e.clientY - (r.top + r.height/2)) / r.height;
+        el.style.transform = 'translate(' + (dx*7).toFixed(2) + 'px,' + (dy*5 - 2).toFixed(2) + 'px)';
+      });
+      el.addEventListener('mouseleave', function(){ el.style.transform = ''; });
+    });
+  }
+
+  /* ─── 能力卡片：光斑跟着鼠标 ───────────── */
+  if(!rm && fine){
+    document.querySelectorAll('.feat').forEach(function(el){
+      el.addEventListener('mousemove', function(e){
+        var r = el.getBoundingClientRect();
+        el.style.setProperty('--sx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+        el.style.setProperty('--sy', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+      });
+    });
+  }
+
+  /* ─── 下载状态 ─────────────────────────── */
+  var st = document.getElementById('dlstate'), msg = document.getElementById('dlmsg');
+  ['dl1','dl2'].forEach(function(id){
+    var a = document.getElementById(id); if(!a) return;
+    a.addEventListener('click', function(){
+      st.classList.add('on');
+      msg.textContent = '正在下载 lezi-novel-0.2.0.apk…';
+      setTimeout(function(){ msg.textContent = '已开始下载 · 在通知栏查看进度'; }, 4200);
+    });
+  });
+
+  /* ─── 收尾：把上面这些「滚动才更新」的状态先摆正
+     （刷新时浏览器会恢复滚动位置，首帧就得是对的） ─── */
+  onScroll();
+  onParallax();
+  revealCheck();
+  flow();
+})();
+</script>
+</body>
+</html>

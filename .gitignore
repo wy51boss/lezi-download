@@ -1,0 +1,11 @@
+# 安装包不进仓库：9.3 MB，且走国内通道分发，不占 Pages 流量
+*.apk
+
+# 签名密钥与口令永不入库
+*.jks
+*.keystore
+keystore.properties
+
+# 系统杂物
+.DS_Store
+Thumbs.db
