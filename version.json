@@ -1,9 +1,9 @@
 {
-  "versionCode": 2,
-  "versionName": "0.2.0",
-  "notes": "这一版加了应用内检查更新：装好之后在「我的 → 版本」里就能下载并安装新版，不必再回下载页。同时换成正式签名（旧版需要先卸载），并做了六屏界面与正文编辑器的那一轮打磨。",
-  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.2.0.apk",
-  "size": 9316941,
-  "md5": "96d42fd9acf3ecb65289260b713d1e7a",
-  "releasedAt": "2026-10-12 20:20"
+  "versionCode": 3,
+  "versionName": "0.2.1",
+  "notes": "外观体系：文字色四档、编辑器独立外壳、卡片/扁平样式可选、页边距与纸面透明度、背景图改为导入到软件数据（不再依赖系统授权）",
+  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.2.1.apk",
+  "size": 9497241,
+  "md5": "03f58eb3568e0226eb7668890ef656ef",
+  "releasedAt": "2026-10-19 20:25"
 }
