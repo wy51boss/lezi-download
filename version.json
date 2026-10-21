@@ -1,9 +1,9 @@
 {
-  "versionCode": 4,
-  "versionName": "0.2.2",
-  "notes": "工作室：智能体管理改成「工作室管理」，成员档案（职责/模型/工具/提示词）与接入配置合成一页；内容广场：灵感改名「随手记」，新增内容形式栏、错峰入场与悬浮记录按钮；我的页页脚显示版本号。",
-  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.2.2.apk",
-  "size": 9562777,
-  "md5": "fb8b52a0f14c3ac1b05a82eddb29a1dc",
-  "releasedAt": "2026-10-22 02:17"
+  "versionCode": 5,
+  "versionName": "0.2.3",
+  "notes": "真机装不上已修：安装改走系统安装会话，不再经文件授权（小米/MIUI 上不会再报 FileProvider 被拒）；工作室视觉重做：字标工牌头像、空位虚线加号、在用/在岗/待招三级标签、名册错峰入场。",
+  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.2.3.apk",
+  "size": 9562809,
+  "md5": "3ceb3b31399520a002109f040830a469",
+  "releasedAt": "2026-10-22 02:55"
 }
