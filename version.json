@@ -1,9 +1,9 @@
 {
-  "versionCode": 3,
-  "versionName": "0.2.1",
-  "notes": "外观体系：文字色四档、编辑器独立外壳、卡片/扁平样式可选、页边距与纸面透明度、背景图改为导入到软件数据（不再依赖系统授权）",
-  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.2.1.apk",
-  "size": 9497241,
-  "md5": "03f58eb3568e0226eb7668890ef656ef",
-  "releasedAt": "2026-10-19 20:25"
+  "versionCode": 4,
+  "versionName": "0.2.2",
+  "notes": "工作室：智能体管理改成「工作室管理」，成员档案（职责/模型/工具/提示词）与接入配置合成一页；内容广场：灵感改名「随手记」，新增内容形式栏、错峰入场与悬浮记录按钮；我的页页脚显示版本号。",
+  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.2.2.apk",
+  "size": 9562777,
+  "md5": "fb8b52a0f14c3ac1b05a82eddb29a1dc",
+  "releasedAt": "2026-10-22 02:17"
 }
