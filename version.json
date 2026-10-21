@@ -1,9 +1,9 @@
 {
-  "versionCode": 5,
-  "versionName": "0.2.3",
-  "notes": "真机装不上已修：安装改走系统安装会话，不再经文件授权（小米/MIUI 上不会再报 FileProvider 被拒）；工作室视觉重做：字标工牌头像、空位虚线加号、在用/在岗/待招三级标签、名册错峰入场。",
-  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.2.3.apk",
+  "versionCode": 6,
+  "versionName": "0.2.4",
+  "notes": "装不上的问题真修好了：改用系统安装会话，模拟器端到端实测通过（旧版 → 系统确认 → 装成新版）。工作室视觉重做：字标工牌头像、空位改＋、在用/在岗/待招三级标签、名册错峰入场。",
+  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.2.4.apk",
   "size": 9562809,
-  "md5": "3ceb3b31399520a002109f040830a469",
-  "releasedAt": "2026-10-22 02:55"
+  "md5": "4ec3fa2bc8188356a39d74a22d21dca4",
+  "releasedAt": "2026-10-22 03:40"
 }
