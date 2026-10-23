@@ -1,9 +1,9 @@
 {
   "versionCode": 10,
   "versionName": "0.2.8",
-  "notes": "会员特权页；页面转场按层级分档",
+  "notes": "会员特权页；页面转场按层级分档；修复更新清单被 CDN 缓存",
   "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.2.8.apk",
   "size": 9727149,
-  "md5": "565cef9807dc83c203a628a3283e7549",
-  "releasedAt": "2026-10-24 04:39"
+  "md5": "4e06e80b618f13798dc2e017e809f5b1",
+  "releasedAt": "2026-10-24 04:49"
 }
