@@ -1,9 +1,9 @@
 {
-  "versionCode": 7,
-  "versionName": "0.2.5",
-  "notes": "账号体系：邮箱验证码登录，登录后自动接通云端通道；没登录就用不了 AI",
-  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.2.5.apk",
-  "size": 9694381,
-  "md5": "6112806cced05fe000910fd77d92db57",
-  "releasedAt": "2026-10-23 18:55"
+  "versionCode": 8,
+  "versionName": "0.2.6",
+  "notes": "会员体系：注册即发「初创会员」编号，永久会员由运营发放；修好云端登录态过期后不自动续的问题",
+  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.2.6.apk",
+  "size": 9710765,
+  "md5": "2f6fa6560c5f49afd72647b25d5f26bf",
+  "releasedAt": "2026-10-24 00:58"
 }
