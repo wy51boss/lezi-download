@@ -1,9 +1,9 @@
 {
-  "versionCode": 9,
-  "versionName": "0.2.7",
-  "notes": "登录界面收干净：账号条只反映登录/未登录，不再显示后端通道状态；登录失败原因改用强调色；换个邮箱原地切回填邮箱屏",
-  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.2.7.apk",
-  "size": 9710765,
-  "md5": "09d6f1d188723cab86b7a2ff110ed187",
-  "releasedAt": "2026-10-24 01:20"
+  "versionCode": 10,
+  "versionName": "0.2.8",
+  "notes": "会员特权页；页面转场按层级分档",
+  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.2.8.apk",
+  "size": 9727149,
+  "md5": "565cef9807dc83c203a628a3283e7549",
+  "releasedAt": "2026-10-24 04:39"
 }
