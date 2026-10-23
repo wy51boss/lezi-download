@@ -1,9 +1,9 @@
 {
-  "versionCode": 6,
-  "versionName": "0.2.4",
-  "notes": "装不上的问题真修好了：改用系统安装会话，模拟器端到端实测通过（旧版 → 系统确认 → 装成新版）。工作室视觉重做：字标工牌头像、空位改＋、在用/在岗/待招三级标签、名册错峰入场。",
-  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.2.4.apk",
-  "size": 9562809,
-  "md5": "4ec3fa2bc8188356a39d74a22d21dca4",
-  "releasedAt": "2026-10-22 03:40"
+  "versionCode": 7,
+  "versionName": "0.2.5",
+  "notes": "账号体系：邮箱验证码登录，登录后自动接通云端通道；没登录就用不了 AI",
+  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.2.5.apk",
+  "size": 9694381,
+  "md5": "6112806cced05fe000910fd77d92db57",
+  "releasedAt": "2026-10-23 18:55"
 }
