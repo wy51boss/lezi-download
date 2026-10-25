@@ -1,9 +1,9 @@
 {
-  "versionCode": 10,
-  "versionName": "0.2.8",
-  "notes": "会员特权页；页面转场按层级分档；修复更新清单被 CDN 缓存",
-  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.2.8.apk",
-  "size": 9727149,
-  "md5": "4e06e80b618f13798dc2e017e809f5b1",
-  "releasedAt": "2026-10-24 04:49"
+  "versionCode": 11,
+  "versionName": "0.2.9",
+  "notes": "统计沉到「我的」二级页；底栏第 2 格换成工作台占位页；智能体从代码常量变成可增删的真实数据（新建向导 + 单人档案页 + 辞掉）；新增两处版本记录（网站一份、App 内一份）",
+  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.2.9.apk",
+  "size": 9792685,
+  "md5": "a4f22e375777af9807a0530106423fc6",
+  "releasedAt": "2026-10-26 00:50"
 }

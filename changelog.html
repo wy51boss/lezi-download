@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>版本记录 · 乐子小说</title>
+<meta name="description" content="乐子小说每一个发布版本改了什么 —— 从 0.2.0 到现在，一版一条，按时间倒序。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="版本记录 · 乐子小说">
+<meta property="og:description" content="从 0.2.0 到现在，每个版本改了什么。">
+<meta property="og:image" content="https://lezi.wuyi.fun/assets/logo-mark.png">
+<meta name="theme-color" content="#F6F8FC">
+<link rel="icon" href="assets/logo-mark.png">
+<noscript><style>.rv,.rise{opacity:1;transform:none;clip-path:none}</style></noscript>
+<style>
+/* ════════════════════════════════════════════════════════════
+   乐子小说 · 版本记录页（changelog.html）
+
+   它和主页 index.html 共用同一套设计令牌（:root 里的变量逐字相同），
+   差别只在内容结构：主页是营销页（首屏 hero + 画廊 + 下载），
+   这一页是一份**清单** —— 一版一条，从新到旧。
+
+   为什么不把它塞进主页当一个 section：
+     主页的阅读动线是「被打动 → 下载」。版本记录是「查一下」，
+     是回头客才会看的东西。两者的读者和目的都不同，混在一起两边都做不好。
+     所以独立成页，从顶栏和页脚进（导航里那个「版本记录」tab）。
+   ════════════════════════════════════════════════════════════ */
+:root{
+  --bg:#F6F8FC;
+  --bg-2:#FFFFFF;
+  --card:#FCFDFE;
+  --ink:#0C1526;
+  --ink-2:#2B3B56;
+  --dim:#5C6C86;
+  --dim-2:#8A98AD;
+  --brand:#1F5EFF;
+  --brand-d:#1747C8;
+  --brand-l:#4C86FF;
+  --brand-p:#7BA8FF;
+  --violet:#8B7BFF;
+  --line:rgba(17,38,74,.075);
+  --line-2:rgba(17,38,74,.13);
+  --warn:#8A5A00;
+  --warn-bd:rgba(196,140,20,.3);
+  --warn-bg:rgba(255,182,38,.11);
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --serif:"Songti SC","Source Han Serif SC","Noto Serif CJK SC",Georgia,serif;
+  --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --blur:22px;
+  --glass-shadow:inset 0 1px 0 rgba(255,255,255,.95),
+                 0 1px 2px rgba(17,38,74,.05),
+                 0 12px 32px -16px rgba(17,38,74,.14),
+                 0 40px 90px -56px rgba(31,94,255,.3);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;text-rendering:optimizeLegibility}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+::selection{background:rgba(31,94,255,.16)}
+
+/* ── 背景（与主页同一套柔光云 + 细网格 + 顶部蓝雾）── */
+.aurora{position:fixed;inset:0;z-index:-3;pointer-events:none;overflow:hidden}
+.aurora i{position:absolute;border-radius:50%;display:block}
+.aurora i:nth-child(1){width:min(1180px,138vw);aspect-ratio:1;left:calc(50% - min(590px,69vw));top:-40%;
+  background:radial-gradient(circle,rgba(31,94,255,.13),rgba(31,94,255,.04) 40%,transparent 68%)}
+.aurora i:nth-child(2){width:min(800px,98vw);aspect-ratio:1;left:-18%;top:22%;
+  background:radial-gradient(circle,rgba(76,134,255,.1),rgba(76,134,255,.03) 44%,transparent 70%)}
+.aurora i:nth-child(3){width:min(700px,86vw);aspect-ratio:1;right:-16%;top:58%;
+  background:radial-gradient(circle,rgba(139,123,255,.08),rgba(139,123,255,.025) 44%,transparent 72%)}
+.bg{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
+.horizon{position:absolute;inset:0;
+  background-image:linear-gradient(rgba(31,94,255,.034) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(31,94,255,.034) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 82% 60% at 50% 14%,#000 10%,transparent 74%);
+  -webkit-mask-image:radial-gradient(ellipse 82% 60% at 50% 14%,#000 10%,transparent 74%)}
+.vig{position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(31,94,255,.06),rgba(31,94,255,.018) 24%,transparent 48%)}
+
+/* ── 顶栏 ── */
+header{position:fixed;top:0;left:0;right:0;z-index:60;
+  display:flex;align-items:center;gap:28px;
+  padding:15px clamp(18px,4vw,54px);
+  transition:background .35s,backdrop-filter .35s,border-color .35s,box-shadow .35s;
+  border-bottom:1px solid transparent}
+header.solid{background:rgba(255,255,255,.82);
+  backdrop-filter:blur(20px) saturate(170%);-webkit-backdrop-filter:blur(20px) saturate(170%);
+  border-bottom-color:var(--line);
+  box-shadow:0 1px 2px rgba(17,38,74,.03),0 12px 32px -26px rgba(17,38,74,.5)}
+.brand{display:flex;align-items:center;gap:11px;flex-shrink:0}
+.brand img{height:23px;width:auto}
+.brand-txt{font-size:12px;letter-spacing:.18em;color:var(--dim-2);padding-left:11px;
+  border-left:1px solid var(--line-2);font-family:var(--mono)}
+.beta{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;flex-shrink:0;
+  padding:3px 8px;border-radius:6px;line-height:1.5;
+  color:var(--warn);border:1px solid var(--warn-bd);background:var(--warn-bg)}
+header nav{display:flex;gap:30px;margin-left:auto;font-size:13.5px;color:var(--dim)}
+header nav a{position:relative;padding:4px 0;transition:color .25s}
+header nav a:hover,header nav a.active{color:var(--ink)}
+header nav a::after{content:"";position:absolute;left:0;bottom:0;height:1.5px;width:0;
+  background:var(--brand);transition:width .3s var(--ease)}
+header nav a:hover::after,header nav a.active::after{width:100%}
+.hdr-cta{flex-shrink:0}
+
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:13px 26px;border-radius:13px;font-size:14.5px;font-weight:500;
+  border:1px solid var(--line-2);color:var(--ink);cursor:pointer;
+  overflow:hidden;white-space:nowrap;isolation:isolate;
+  background:linear-gradient(180deg,#FFFFFF,rgba(248,251,255,.9));
+  backdrop-filter:blur(14px) saturate(150%);-webkit-backdrop-filter:blur(14px) saturate(150%);
+  box-shadow:0 1px 2px rgba(17,38,74,.06),0 10px 24px -16px rgba(17,38,74,.4);
+  transition:transform .25s var(--ease),border-color .25s,box-shadow .3s,color .25s}
+.btn:hover{transform:translateY(-2px);border-color:rgba(31,94,255,.4);color:var(--brand);
+  box-shadow:0 1px 2px rgba(17,38,74,.07),0 14px 30px -16px rgba(31,94,255,.5)}
+.btn .sheen{position:absolute;top:0;bottom:0;width:42%;left:-60%;z-index:1;pointer-events:none;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.42),transparent);
+  transform:skewX(-18deg);transition:left .7s var(--ease)}
+.btn:hover .sheen{left:118%}
+.btn-holo{border:1px solid rgba(23,71,200,.9);color:#FFFFFF;font-weight:600;
+  background:linear-gradient(180deg,#3A72FF 0%,#1F5EFF 52%,#1747C8 100%)}
+.btn-holo .sheen{background:linear-gradient(105deg,transparent,rgba(255,255,255,.5),transparent)}
+.btn-sm{padding:9px 19px;font-size:13px;border-radius:11px}
+.btn span.lbl{position:relative;z-index:2}
+
+/* ── 页头 ── */
+.chead{max-width:1000px;margin:0 auto;
+  padding:clamp(120px,17vw,182px) clamp(18px,4vw,54px) clamp(30px,5vw,52px)}
+.eyebrow{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.2em;color:var(--brand);text-transform:uppercase;margin-bottom:18px}
+.eyebrow::after{content:"";flex:1;height:1px;max-width:130px;
+  background:linear-gradient(90deg,rgba(31,94,255,.5),transparent)}
+.chead h1{font-size:clamp(30px,4.4vw,50px);margin:0 0 18px;font-weight:700;
+  letter-spacing:-.03em;line-height:1.2}
+.chead p{margin:0;color:var(--dim);font-size:16px;max-width:38em;line-height:1.85}
+
+/* ── 当前版本条 ── */
+.nowwrap{max-width:1000px;margin:0 auto;padding:0 clamp(18px,4vw,54px)}
+.nowbar{display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  border-radius:18px;padding:20px 26px}
+.nowbar .pulse{width:9px;height:9px;border-radius:50%;background:var(--brand);
+  flex-shrink:0;position:relative}
+.nowbar .pulse::after{content:"";position:absolute;inset:-5px;border-radius:50%;
+  border:1px solid var(--brand);opacity:.35;animation:pulse 2.6s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.6);opacity:.5}100%{transform:scale(1.7);opacity:0}}
+.nowbar .nl{display:flex;flex-direction:column;gap:2px;flex:1;min-width:180px}
+.nowbar .nl small{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--dim-2)}
+.nowbar .nl b{font-size:17px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+.nowbar .nm{font-family:var(--mono);font-size:12.5px;color:var(--dim);
+  display:flex;gap:22px;flex-wrap:wrap}
+.nowbar .nm b{color:var(--brand);font-weight:600}
+
+/* ── 时间轴 ── */
+.tlwrap{max-width:1000px;margin:0 auto;
+  padding:clamp(42px,6vw,68px) clamp(18px,4vw,54px) 40px}
+.tl{position:relative}
+.tl::before{content:"";position:absolute;left:7px;top:12px;bottom:12px;width:1px;
+  background:linear-gradient(180deg,rgba(31,94,255,.28),rgba(31,94,255,.06) 42%,transparent)}
+.ent{position:relative;padding:0 0 46px 46px}
+.ent:last-child{padding-bottom:12px}
+.ent .node{position:absolute;left:0;top:6px;width:15px;height:15px;border-radius:50%;
+  background:var(--bg-2);border:2px solid var(--line-2);z-index:2}
+.ent.cur .node{background:var(--brand);border-color:var(--brand);
+  box-shadow:0 0 0 5px rgba(31,94,255,.12)}
+.ent .vline{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:10px}
+.ent .ver{font-size:24px;font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+.ent.cur .ver{color:var(--brand)}
+.tagnow{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+  padding:3px 9px;border-radius:6px;color:#fff;background:var(--brand)}
+.ent .date{font-family:var(--mono);font-size:12px;color:var(--dim-2);margin-left:auto}
+.ent .topic{font-size:15.5px;font-weight:600;color:var(--ink-2);margin:0 0 14px}
+.ent ul{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.ent li{position:relative;padding-left:20px;font-size:14.5px;color:var(--dim);line-height:1.78}
+.ent li::before{content:"";position:absolute;left:2px;top:.72em;width:5px;height:5px;
+  border-radius:50%;background:rgba(31,94,255,.42)}
+.ent li b{color:var(--ink-2);font-weight:600}
+.ent .card{border-radius:16px;padding:22px 26px 24px}
+.ent.cur .card{border-color:rgba(31,94,255,.28)}
+
+.glass{position:relative;
+  background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(248,251,255,.72));
+  backdrop-filter:blur(var(--blur)) saturate(160%);
+  -webkit-backdrop-filter:blur(var(--blur)) saturate(160%);
+  border:1px solid var(--line-2);box-shadow:var(--glass-shadow)}
+
+/* ── 页脚 ── */
+footer{border-top:1px solid var(--line);margin-top:40px;
+  background:linear-gradient(180deg,transparent,rgba(31,94,255,.03))}
+.fin{max-width:1000px;margin:0 auto;padding:56px clamp(18px,4vw,54px) 44px;
+  display:flex;justify-content:space-between;align-items:flex-start;gap:36px;flex-wrap:wrap}
+.fin .fl{display:flex;flex-direction:column;gap:16px}
+.fin .fl img{height:23px;width:auto;align-self:flex-start;opacity:.95}
+.fin p{margin:0;font-size:13.5px;color:var(--dim);max-width:26em;line-height:1.8}
+.fin .fr{display:flex;gap:52px;flex-wrap:wrap}
+.fin .col h5{margin:0 0 14px;font-size:11.5px;letter-spacing:.16em;color:var(--dim-2);
+  font-weight:500;text-transform:uppercase}
+.fin .col a{display:block;font-size:13.5px;color:var(--dim);padding:4px 0;transition:color .22s}
+.fin .col a:hover{color:var(--brand)}
+.copy{max-width:1000px;margin:0 auto;padding:0 clamp(18px,4vw,54px) 40px;
+  font-size:12px;color:var(--dim-2);font-family:var(--mono)}
+
+/* ── 揭示 ── */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rv.in{opacity:1;transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms!important;transition-duration:.001ms!important}
+  .rv{opacity:1;transform:none}
+}
+@media (max-width:860px){
+  header nav{display:none}
+  .hdr-cta{margin-left:auto}
+  .brand-txt{display:none}
+  .ent .date{margin-left:0;width:100%}
+  .ent{padding-left:34px}
+  .tl::before{left:6px}
+  .ent .node{width:13px;height:13px}
+}
+</style>
+</head>
+<body>
+
+<div class="aurora"><i></i><i></i><i></i></div>
+<div class="bg"><div class="horizon"></div><div class="vig"></div></div>
+
+<header id="hdr">
+  <a class="brand" href="index.html">
+    <img src="assets/logo-word-dark.png" alt="乐子小说">
+    <span class="brand-txt">LEZI NOVEL</span>
+    <span class="beta">内测版</span>
+  </a>
+  <nav id="nav">
+    <a href="index.html#gallery">界面</a>
+    <a href="index.html#why">为什么</a>
+    <a href="index.html#features">能力</a>
+    <a href="index.html#spec">规格</a>
+    <a href="changelog.html" class="active">版本记录</a>
+  </nav>
+  <a class="btn btn-holo btn-sm hdr-cta" href="index.html#download"><span class="sheen"></span><span class="lbl">下载 APK</span></a>
+</header>
+
+<main>
+
+  <div class="chead">
+    <div class="eyebrow rise">Changelog</div>
+    <h1 class="rise d1">版本记录</h1>
+    <p class="rise d2">
+      从 <b style="color:var(--ink-2)">0.2.0</b> 到现在的每一个发布版本，改了什么，一版一条。
+      内测期更新比较频繁，想装最新版的直接走<a href="index.html#download" style="color:var(--brand)">下载页</a>；
+      已经装了的在应用里点「检查更新」就行。
+    </p>
+  </div>
+
+  <div class="nowwrap">
+    <div class="nowbar glass rv">
+      <span class="pulse"></span>
+      <span class="nl">
+        <small>当前版本</small>
+        <b data-ver>0.2.9</b>
+      </span>
+      <span class="nm">
+        <span>versionCode <b data-vcode>11</b></span>
+        <span>发布 <b data-built>2026-10-26</b></span>
+        <span>Android 8.0+</span>
+      </span>
+    </div>
+  </div>
+
+  <div class="tlwrap">
+    <div class="tl" id="tl"><!-- 由脚本按版本数组渲染 --></div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="fin">
+    <div class="fl">
+      <img src="assets/logo-word-dark.png" alt="乐子小说">
+      <p>想做一个读过你全部草稿的写作搭档 —— 像人一样，陪你把这部长篇写完。</p>
+    </div>
+    <div class="fr">
+      <div class="col">
+        <h5>本页</h5>
+        <a href="index.html">主页</a>
+        <a href="index.html#gallery">界面</a>
+        <a href="index.html#features">能力</a>
+        <a href="index.html#download">下载</a>
+      </div>
+      <div class="col">
+        <h5>其他</h5>
+        <a href="index.html#download">下载 APK</a>
+        <a href="#top">回到顶部</a>
+      </div>
+    </div>
+  </div>
+  <div class="copy">乐子小说 · com.lezi.novel · v<span data-ver>0.2.9</span> · 内测版 · Android 8.0+</div>
+</footer>
+
+<script>
+/* ════════════════════════════════════════════════════════════
+   版本数据 —— 唯一真源。
+
+   ⚠️ **每次发版（跑完 publish_apk.py）在最前面加一条。**
+   只记已经发出去的版本：把还没发布的改动写上去，等于让读者去找一个
+   不存在的版本。
+
+   每一条的 items 都来自**发布那一刻**写下的 version.json.notes 与
+   发布记录，不是事后补的漂亮话。措辞可以整理，事实不许改。
+   ════════════════════════════════════════════════════════════ */
+var RELEASES = [
+  { code:11, ver:'0.2.9', date:'2026-10-25', topic:'工作台 · 智能体可增删 · 版本记录', items:[
+    '统计从底栏页签沉到「我的」页：点顶部写作卡展开完整统计',
+    '底栏第 2 格换成<b>「工作台」</b>——暂时占位，如实说明这里以后放什么，不摆假数据',
+    '智能体从代码里的常量变成<b>可增删的真实数据</b>：三步新建向导、点进去单独管理、自建成员可辞掉',
+    '新增<b>版本记录</b>：网站一份、App 内一份（设置 → 关于），两份独立、互不内嵌'
+  ]},
+  { code:10, ver:'0.2.8', date:'2026-10-24', topic:'会员特权页 · 转场按层级分档', items:[
+    '新增<b>会员特权页</b>：编号、种类、权益一次说清',
+    '会员卡重做 —— 深底白字，编号给到足够大，不再是挤在账号下面的一行小字',
+    '页面转场按层级分档：内容推进横向推移，工具页纵向升起',
+    '<b>修复更新清单被 CDN 缓存</b>：清单请求加时间戳，否则永远读到旧版本'
+  ]},
+  { code:9, ver:'0.2.7', date:'2026-10-24', topic:'登录界面收干净', items:[
+    '账号条只反映「登录 / 未登录」，不再混进后端通道的健康度',
+    '登录失败的原因改用强调色，不再是一行容易被忽略的灰字',
+    '换个邮箱：原地切回填邮箱那一屏，不用退出重进'
+  ]},
+  { code:8, ver:'0.2.6', date:'2026-10-24', topic:'会员体系', items:[
+    '注册即发<b>「初创会员」编号</b>（CZ-0001 起），终身不变、删号不复用',
+    '永久会员由运营发放（「怎么成为会员」和「有什么权益」是两件事）',
+    '修好登录态过期后不自动续的问题 —— 过期不再等于登出'
+  ]},
+  { code:7, ver:'0.2.5', date:'2026-10-23', topic:'账号体系', items:[
+    '邮箱验证码登录',
+    '登录后自动接通云端通道（换到长期有效的票）',
+    '没登录就用不了 AI —— 门禁只认票，不看界面上的字'
+  ]},
+  { code:6, ver:'0.2.4', date:'2026-10-22', topic:'应用内安装真修好', items:[
+    '应用内安装改用<b>系统安装会话</b>，不再经文件授权（小米 / MIUI 上不再被拒）',
+    '工作室视觉重做：字标工牌头像、在用 / 在岗 / 待招三级标签',
+    '名册错峰入场，打开是「摊开」而不是「蹦出来」'
+  ]},
+  { code:5, ver:'0.2.3', date:'2026-10-22', topic:'工作室视觉重做', items:[
+    '工作室视觉重做：字标工牌头像、空位虚线加号、三级标签、名册错峰入场',
+    '尝试修应用内安装 —— <b>这一版没修好</b>，装不上的问题在 0.2.4 才真解决'
+  ]},
+  { code:4, ver:'0.2.2', date:'2026-10-22', topic:'工作室管理 · 内容广场改版', items:[
+    '智能体管理 → <b>工作室管理</b>：成员档案与接入配置合成一页',
+    '内容广场：灵感改名「随手记」，新增内容形式栏与悬浮记录按钮',
+    '「我的」页页脚显示版本号'
+  ]},
+  { code:3, ver:'0.2.1', date:'2026-10-19', topic:'外观体系', items:[
+    '文字色四档：近黑 / 柔 / 暖 / 冷',
+    '编辑器独立外壳：纸色、字色、顶栏不再跟着界面主题走',
+    '卡片 / 扁平样式可选，另有页边距与纸面透明度',
+    '背景图改为导入到应用数据，不再依赖系统授权（换机不会变成死链）'
+  ]},
+  { code:2, ver:'0.2.0', date:'2026-10-12', topic:'应用内检查更新 · 正式签名', items:[
+    '<b>应用内检查更新</b>：装好之后在「我的 → 版本」里就能下载并安装新版，不必再回下载页',
+    '换成正式签名 —— 从这一版起，旧的手装包需要先卸载才能装',
+    '六屏界面与正文编辑器的那一轮打磨'
+  ]}
+];
+
+(function(){
+  var rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── 渲染时间轴 ── */
+  var tl = document.getElementById('tl');
+  var curCode = null;
+  RELEASES.forEach(function(r, i){
+    var cur = (i === 0);   /* 列表最新的那条 = 当前线上版本 */
+    var e = document.createElement('div');
+    e.className = 'ent rv' + (cur ? ' cur' : '') + (i % 2 ? ' d1' : '');
+    var lis = r.items.map(function(t){ return '<li>' + t + '</li>'; }).join('');
+    e.innerHTML =
+      '<span class="node"></span>' +
+      '<div class="card glass">' +
+        '<div class="vline">' +
+          '<span class="ver">v' + r.ver + '</span>' +
+          (cur ? '<span class="tagnow">当前版本</span>' : '') +
+          '<span class="date">' + r.date + '</span>' +
+        '</div>' +
+        '<p class="topic">' + r.topic + '</p>' +
+        '<ul>' + lis + '</ul>' +
+      '</div>';
+    tl.appendChild(e);
+  });
+
+  /* ── 顶栏滚动变实 ── */
+  var hdr = document.getElementById('hdr');
+  function onScroll(){ hdr.classList.toggle('solid', scrollY > 30); }
+  addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  /* ── 揭示 ── */
+  var pending = [].slice.call(document.querySelectorAll('.rv, .rise'));
+  function revealCheck(){
+    var vh = innerHeight;
+    for (var i = pending.length - 1; i >= 0; i--){
+      var el = pending[i];
+      if (el.getBoundingClientRect().top < vh * 0.9){
+        el.classList.add('in');
+        pending.splice(i, 1);
+      }
+    }
+  }
+  addEventListener('scroll', revealCheck, {passive:true});
+  addEventListener('resize', revealCheck);
+  addEventListener('load', revealCheck);
+  revealCheck();
+  if (!rm) setTimeout(revealCheck, 260);
+})();
+</script>
+</body>
+</html>
