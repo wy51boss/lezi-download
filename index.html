@@ -256,6 +256,37 @@ header nav a:hover::after,header nav a.active::after{width:100%}
   transform:translate(-50%,-50%) scale(0);animation:rip .62s var(--ease) forwards}
 @keyframes rip{to{transform:translate(-50%,-50%) scale(1);opacity:0}}
 .btn-sm{padding:9px 19px;font-size:13px;border-radius:11px}
+
+/* ─── 胶囊按钮（2026-10-27）───────────────────────────────
+   参考 DeepSeek 官网 / DSH：按钮是「一颗胶囊」，不是「一块带光效的板砖」。
+   去掉的是三样东西：呼吸动画（一直在动＝抢注意力）、扫光 sheen（廉价高光）、
+   13px 小圆角（DS 用的是全圆角 100px）。留下的只有：实心/描边 + 抬起 1px。
+   尺寸统一 52px 高，视觉上比原来的 46px 更稳，也够手指点。 */
+.btn-cap{
+  height:52px;padding:0 30px;border-radius:100px;
+  font-size:15px;font-weight:500;letter-spacing:.01em;
+  border:1px solid transparent;overflow:visible;isolation:auto;
+  transition:transform .2s var(--ease),background .2s var(--ease),
+             box-shadow .2s var(--ease),border-color .2s;
+}
+.btn-cap .ic{width:16px;height:16px;flex:none;display:block}
+.btn-cap-primary{
+  background:var(--brand);color:#fff;border-color:var(--brand);
+  box-shadow:0 1px 2px rgba(17,38,74,.14),0 10px 22px -12px rgba(31,94,255,.55);
+}
+.btn-cap-primary:hover{background:var(--brand-d);border-color:var(--brand-d);
+  transform:translateY(-1px);box-shadow:0 2px 4px rgba(17,38,74,.16),0 14px 28px -12px rgba(31,94,255,.6)}
+.btn-cap-primary:active{transform:translateY(0)}
+.btn-cap-ghost{
+  background:rgba(255,255,255,.66);color:var(--ink);border-color:var(--line-2);
+  -webkit-backdrop-filter:blur(14px) saturate(150%);backdrop-filter:blur(14px) saturate(150%);
+  box-shadow:0 1px 2px rgba(17,38,74,.05);
+}
+.btn-cap-ghost:hover{background:#fff;border-color:rgba(31,94,255,.35);color:var(--brand);
+  transform:translateY(-1px);box-shadow:0 8px 20px -12px rgba(31,94,255,.4)}
+/* 头部那颗小胶囊：比正文里的矮一档，但仍保持满圆 */
+.btn-cap.btn-sm-cap{height:40px;padding:0 20px;font-size:13.5px}
+
 .btn.mag{transition:transform .18s var(--ease),border-color .25s,box-shadow .3s}
 .btn span.lbl{position:relative;z-index:2}
 .btn i.ic{position:relative;z-index:2;font-style:normal;font-size:1.1em;line-height:1}
@@ -513,10 +544,20 @@ h2{font-size:clamp(26px,3.6vw,41px);margin:0 0 16px;font-weight:700;letter-spaci
              0 20px 44px -24px rgba(17,38,74,.3)}
 .qrc-box img{width:156px;height:156px;border-radius:8px}
 .qrc p{margin:16px 0 0;font-size:12.5px;color:var(--dim-2);font-family:var(--mono)}
-#dlstate{margin-top:20px;height:34px;display:flex;align-items:center;gap:11px;
-  font-family:var(--mono);font-size:12.5px;color:var(--brand);opacity:0;transition:opacity .3s;
+/* 状态行（2026-10-27 改）：原来默认隐藏、点击后才出现一条**跑动的假进度条** ——
+   4.2 秒后自己把文案换成「已开始下载 · 在通知栏查看进度」。
+   但 APK 在另一个域且没有 CORS / Range（实测：无 Access-Control-Allow-Origin，
+   Range 请求返回 200 全量），浏览器**拿不到任何真实进度**。所以那条动画是在演。
+   现在：这行同时是「元信息行」和「状态行」——默认就显示平台与体积，
+   点击后只如实说「已开始下载」，并给一条「没反应就点这里」的兜底。
+   不显示进度条，因为进度真的不知道。 */
+#dlstate{margin-top:20px;min-height:20px;display:flex;align-items:center;gap:9px;
+  font-family:var(--mono);font-size:12.5px;color:var(--dim);transition:color .25s;
   position:relative;z-index:2}
-#dlstate.on{opacity:1}
+#dlstate.on{color:var(--brand)}
+#dlstate .d2{width:6px;height:6px;border-radius:50%;background:currentColor;flex:none;opacity:.5}
+#dlstate.on .d2{opacity:1}
+#dlstate a{color:inherit;text-decoration:underline;text-underline-offset:2px}
 .bar{flex:1;max-width:210px;height:3px;border-radius:9px;background:var(--line-2);position:relative;overflow:hidden}
 .bar::after{content:"";position:absolute;inset:0;width:42%;border-radius:9px;
   background:linear-gradient(90deg,transparent,var(--brand),transparent);
@@ -708,7 +749,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;
     <a href="changelog.html">版本记录</a>
     <a href="#download">下载</a>
   </nav>
-  <a class="btn btn-holo btn-sm hdr-cta mag" href="#download"><span class="sheen"></span><span class="lbl">下载 APK</span></a>
+  <a class="btn btn-cap btn-cap-primary btn-sm-cap hdr-cta" href="#download"><span class="lbl">下载 APK</span></a>
 </header>
 
 <main id="top">
@@ -725,10 +766,11 @@ footer{border-top:1px solid var(--line);margin-top:40px;
         <p class="kicker">不是「一键生成小说」。是<b>让 AI 像人一样，陪你写完这一部长篇</b>。</p>
       </div>
       <div class="cta rv d3">
-        <a class="btn btn-holo mag" id="dl1" href="https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.2.9.apk" download>
-          <span class="sheen"></span><span class="lbl">下载内测版安装包</span><i class="ic">↓</i>
+        <a class="btn btn-cap btn-cap-primary" id="dl1" href="https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.3.0.apk" download>
+          <span class="lbl">下载内测版安装包</span>
+          <svg class="ic" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.6v8.1M4.7 7.5 8 10.8l3.3-3.3M2.9 13.2h10.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <a class="btn mag" href="#gallery"><span class="sheen"></span><span class="lbl">先看看它长什么样</span></a>
+        <a class="btn btn-cap btn-cap-ghost" href="#gallery"><span class="lbl">先看看它长什么样</span></a>
       </div>
     </div>
     <div class="hero-r rv d2">
@@ -857,7 +899,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;
           没有隐藏的「付费版」，也没有要登录才能用的功能。写下来的东西只存在你自己手机上。
         </p>
         <div class="kv rv d3">
-          <div class="kv-row"><span>安装包大小</span><b data-to="9.3" data-dec="1">9.3<i>MB</i></b></div>
+          <div class="kv-row"><span>安装包大小</span><b data-to="9.4" data-dec="1">9.4<i>MB</i></b></div>
           <div class="kv-row"><span>最低系统</span><b>Android 8.0<i>API 26</i></b></div>
           <div class="kv-row"><span>目标系统</span><b>Android 16<i>API 36</i></b></div>
           <div class="kv-row"><span>需要联网</span><b>仅 AI 功能<i>写作离线</i></b></div>
@@ -868,13 +910,13 @@ footer{border-top:1px solid var(--line);margin-top:40px;
         <div class="term-bar"><i></i><i></i><i></i><span>lezi-novel — build info</span></div>
         <div class="term-body">
           <div class="term-row"><em>package</em><b>com.lezi.novel</b></div>
-          <div class="term-row"><em>versionName</em><b>0.2.9</b></div>
-          <div class="term-row"><em>versionCode</em><b>11</b></div>
+          <div class="term-row"><em>versionName</em><b>0.3.0</b></div>
+          <div class="term-row"><em>versionCode</em><b>12</b></div>
           <div class="term-row"><em>minSdk / targetSdk</em><b>26 / 36</b></div>
           <div class="term-row"><em>abi</em><b>universal</b></div>
-          <div class="term-row"><em>md5</em><b>a4f22e37…3fc6</b></div>
-          <div class="term-row"><em>size</em><b>9,792,685 B</b></div>
-          <div class="term-row"><em>built</em><b>2026-10-26 00:50</b></div>
+          <div class="term-row"><em>md5</em><b>b6a75287…3117</b></div>
+          <div class="term-row"><em>size</em><b>9,809,069 B</b></div>
+          <div class="term-row"><em>built</em><b>2026-10-27 03:09</b></div>
           <div class="term-row"><em>signing</em><b class="ok">release ✓</b></div>
         </div>
       </div>
@@ -897,13 +939,14 @@ footer{border-top:1px solid var(--line);margin-top:40px;
           <h3>下载乐子小说 · 内测版</h3>
           <p>点下面的按钮开始下载。下载完成后点开文件，系统会问一次是否允许安装 —— 允许，然后下一步即可。</p>
           <div class="dl-btns">
-            <a class="btn btn-holo mag" id="dl2" href="https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.2.9.apk" download>
-              <span class="sheen"></span><span class="lbl">下载 APK · 9.3 MB</span><i class="ic">↓</i>
+            <a class="btn btn-cap btn-cap-primary" id="dl2" href="https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.3.0.apk" download>
+              <span class="lbl">下载 APK · 9.4 MB</span>
+              <svg class="ic" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.6v8.1M4.7 7.5 8 10.8l3.3-3.3M2.9 13.2h10.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
-            <a class="btn mag" href="#top"><span class="sheen"></span><span class="lbl">回到顶部</span></a>
+            <a class="btn btn-cap btn-cap-ghost" href="#top"><span class="lbl">回到顶部</span></a>
           </div>
-          <div id="dlstate"><span id="dlmsg">正在下载…</span><span class="bar"></span></div>
-          <div class="dl-note">lezi-novel-0.2.9.apk · 9,792,685 bytes · md5 a4f22e37…3fc6</div>
+          <div id="dlstate" aria-live="polite"><span class="d2"></span><span id="dlmsg">Android 8.0 以上 · 安装包 9.4 MB</span></div>
+          <div class="dl-note">lezi-novel-0.3.0.apk · 9,809,069 bytes · md5 b6a75287…3117</div>
         </div>
         <div class="qrc">
           <div class="qrc-box"><img src="assets/qr.png" alt="扫码打开本页" loading="lazy"></div>
@@ -911,7 +954,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;
         </div>
       </div>
       <div class="steps">
-        <div class="step rv d1"><span class="i">STEP 01</span><h4>点下载</h4><p>浏览器开始下载安装包，约 9.3 MB。</p></div>
+        <div class="step rv d1"><span class="i">STEP 01</span><h4>点下载</h4><p>浏览器开始下载安装包，约 9.4 MB。</p></div>
         <div class="step rv d2"><span class="i">STEP 02</span><h4>打开文件</h4><p>在通知栏或「下载」里点开这个 apk。</p></div>
         <div class="step rv d3"><span class="i">STEP 03</span><h4>允许安装</h4><p>系统提示时，允许「安装未知应用」。</p></div>
         <div class="step rv d4"><span class="i">STEP 04</span><h4>开始写</h4><p>装好之后打开「我的 → 检查更新」，以后升级在应用里就能完成。</p></div>
@@ -971,12 +1014,12 @@ footer{border-top:1px solid var(--line);margin-top:40px;
       </div>
       <div class="col">
         <h5>其他</h5>
-        <a href="https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.2.9.apk" download>直接下载 APK</a>
+        <a href="https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.3.0.apk" download>直接下载 APK</a>
         <a href="#top">回到顶部</a>
       </div>
     </div>
   </div>
-  <div class="copy">乐子小说 · com.lezi.novel · v0.2.9 · 内测版 · Android 8.0+</div>
+  <div class="copy">乐子小说 · com.lezi.novel · v0.3.0 · 内测版 · Android 8.0+</div>
 </footer>
 
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="放大查看截图">
@@ -1386,16 +1429,74 @@ footer{border-top:1px solid var(--line);margin-top:40px;
     });
   }
 
-  /* ─── 下载状态 ─────────────────────────── */
-  var st = document.getElementById('dlstate'), msg = document.getElementById('dlmsg');
-  ['dl1','dl2'].forEach(function(id){
-    var a = document.getElementById(id); if(!a) return;
-    a.addEventListener('click', function(){
-      st.classList.add('on');
-      msg.textContent = '正在下载 lezi-novel-0.2.9.apk…';
-      setTimeout(function(){ msg.textContent = '已开始下载 · 在通知栏查看进度'; }, 4200);
+  /* ─── 下载：只报事实，不演进度（2026-10-27 重写）────────────────
+     两条实测约束：
+       1. APK 在 lezi-novel-download.app.workbuddy.host，**没有 CORS 头**
+          （响应里没有 Access-Control-Allow-Origin），**也不支持 Range**
+          （Range 请求返回 200 全量）。跨域读流做真实进度条，这条路是堵死的。
+       2. version.json 与页面同域（lezi.wuyi.fun），可以 fetch。
+          所以页面上的版本号 / 体积 / md5 **以清单为准**，静态文本只当兜底
+          （它同时是 publish_apk.py 的替换目标，两条腿都留着）。
+     于是这里只做三件事：
+       · 启动时用清单校正 href、体积、md5，并给首屏 chip 补上真实版本号
+       · 按设备改文案：安卓说「安装到这台手机」，桌面说「下载 APK」并提醒要装到手机上
+       · 点击后只说「已开始下载」，3.5 秒后补一条「没反应就点这里重试」
+     绝不自己宣布「正在下载 xx%」或「下载完成」—— 这两件事都没法验证。 */
+  (function(){
+    var st = document.getElementById('dlstate'), msg = document.getElementById('dlmsg');
+    var note = document.querySelector('.dl-note');
+    var dl1 = document.getElementById('dl1'), dl2 = document.getElementById('dl2');
+    if(!st || !msg) return;
+
+    var isAndroid = /android/i.test(navigator.userAgent || '');
+    function mb(b){ return (b / 1048576).toFixed(1) + ' MB'; }
+    function bytes(b){ return String(b).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+    function setMsg(html){ msg.innerHTML = html; }
+
+    if(isAndroid){
+      if(dl1) dl1.querySelector('.lbl').textContent = '安装到这台手机';
+      setMsg('Android 8.0 以上 · 安装包 9.4 MB');
+    }else{
+      if(dl1) dl1.querySelector('.lbl').textContent = '下载 APK';
+      setMsg('Android 安装包 · 需装到安卓手机上使用');
+    }
+
+    fetch('version.json?t=' + Date.now(), { cache:'no-store' })
+      .then(function(r){ if(!r.ok) throw new Error('manifest ' + r.status); return r.json(); })
+      .then(function(v){
+        if(!v || !v.url) return;
+        var sizeMB = mb(v.size);
+        if(dl1) dl1.href = v.url;
+        if(dl2) dl2.href = v.url;
+        if(dl2) dl2.querySelector('.lbl').textContent = '下载 APK · ' + sizeMB;
+        if(note){
+          note.textContent = v.url.split('/').pop() + ' · ' + bytes(v.size) + ' bytes · md5 ' +
+            v.md5.slice(0,8) + '…' + v.md5.slice(-4);
+        }
+        var chip = document.querySelector('.hero .chip');
+        if(chip && v.versionName && !/v\d+\.\d/.test(chip.textContent)){
+          chip.innerHTML = chip.innerHTML.replace(/内测版本\s*·/, '内测版本 v' + v.versionName + ' ·');
+        }
+        if(!st.classList.contains('on')){
+          setMsg((isAndroid ? 'Android 8.0 以上 · 安装包 ' : 'Android 安装包 · 需装到安卓手机上使用 · ') + sizeMB);
+        }
+      })
+      .catch(function(){ /* 清单读不到时，页面上的静态数字仍然可用，不打扰用户 */ });
+
+    [dl1, dl2].forEach(function(a){
+      if(!a) return;
+      a.addEventListener('click', function(){
+        st.classList.add('on');
+        setMsg(isAndroid ? '已开始下载 · 下拉通知栏看进度'
+                         : '已开始下载 · 装到安卓手机上才能安装');
+        setTimeout(function(){
+          if(!st.classList.contains('on')) return;
+          setMsg((isAndroid ? '还没动？' : '还是没反应？') +
+                 ' <a href="' + a.href + '" download>点这里重试</a>');
+        }, 3500);
+      });
     });
-  });
+  })();
 
   /* ─── 收尾：刷新时浏览器会恢复滚动位置，首帧就得是对的 ── */
   onScroll();
