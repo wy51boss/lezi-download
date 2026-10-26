@@ -1,9 +1,9 @@
 {
-  "versionCode": 11,
-  "versionName": "0.2.9",
-  "notes": "统计沉到「我的」二级页；底栏第 2 格换成工作台占位页；智能体从代码常量变成可增删的真实数据（新建向导 + 单人档案页 + 辞掉）；新增两处版本记录（网站一份、App 内一份）",
-  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.2.9.apk",
-  "size": 9792685,
-  "md5": "a4f22e375777af9807a0530106423fc6",
-  "releasedAt": "2026-10-26 00:50"
+  "versionCode": 12,
+  "versionName": "0.3.0",
+  "notes": "玻璃材质（初创会员）：控件半透+边光，透明度四档。背景图支持模糊与羽化，全局与编辑器各一套。转场重做：工具页返回不再缩小消失，被盖住的页面全程不动。设置页说明改成使用建议。",
+  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.3.0.apk",
+  "size": 9809069,
+  "md5": "b6a75287990c966f85926134eb6b3117",
+  "releasedAt": "2026-10-27 03:09"
 }
