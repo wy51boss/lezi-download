@@ -1,9 +1,9 @@
 {
-  "versionCode": 12,
-  "versionName": "0.3.0",
-  "notes": "玻璃材质（初创会员）：控件半透+边光，透明度四档。背景图支持模糊与羽化，全局与编辑器各一套。转场重做：工具页返回不再缩小消失，被盖住的页面全程不动。设置页说明改成使用建议。",
-  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.3.0.apk",
+  "versionCode": 13,
+  "versionName": "0.3.1",
+  "notes": "每日字数目标不再写死 2000，改由你自己设（四档）；打字机模式从占位变成真开关——正在写的那一段会被滚到屏幕中间，视线不用往下追；作品详情页重做；设置页每一项都补上「什么时候该用」的说明。",
+  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.3.1.apk",
   "size": 9809069,
-  "md5": "b6a75287990c966f85926134eb6b3117",
-  "releasedAt": "2026-10-27 03:09"
+  "md5": "7c467b498cb6d4e09e6ea276e8b53347",
+  "releasedAt": "2026-10-27 14:05"
 }
