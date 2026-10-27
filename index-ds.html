@@ -313,7 +313,7 @@ footer .r{display:flex;gap:20px;flex-wrap:wrap}
   <section class="hero">
     <div class="wrap">
       <a class="ann rv" href="changelog.html">
-        <b>v0.3.0</b><span>玻璃材质 · 背景模糊 · 转场重做</span>
+        <b>v0.3.1</b><span>字数目标可设 · 打字机模式 · 详情页重做</span>
         <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
 
@@ -325,7 +325,7 @@ footer .r{display:flex;gap:20px;flex-wrap:wrap}
       </p>
 
       <div class="ctas rv" style="transition-delay:.18s">
-        <a class="btn btn-primary" id="dl1" href="https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.3.0.apk" download>
+        <a class="btn btn-primary" id="dl1" href="https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.3.1.apk" download>
           <span class="lbl">下载内测版安装包</span>
           <svg class="ic" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.6v8.1M4.7 7.5 8 10.8l3.3-3.3M2.9 13.2h10.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
@@ -439,7 +439,7 @@ footer .r{display:flex;gap:20px;flex-wrap:wrap}
       <p class="lede rv" style="transition-delay:.05s">安卓安装包，免费内测。装好后升级在应用里完成。</p>
 
       <div class="ctas rv" style="transition-delay:.1s">
-        <a class="btn btn-primary" id="dl2" href="https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.3.0.apk" download>
+        <a class="btn btn-primary" id="dl2" href="https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.3.1.apk" download>
           <span class="lbl">下载 APK · 9.4 MB</span>
           <svg class="ic" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.6v8.1M4.7 7.5 8 10.8l3.3-3.3M2.9 13.2h10.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
@@ -449,7 +449,7 @@ footer .r{display:flex;gap:20px;flex-wrap:wrap}
         <span id="dlmsg">Android 安装包 · 需装到安卓手机上使用 · 9.4 MB</span>
       </div>
       <div class="meta rv" style="transition-delay:.16s;margin-top:8px;font-size:11.5px">
-        <span class="dl-note">lezi-novel-0.3.0.apk · 9,809,069 bytes · md5 b6a75287…3117</span>
+        <span class="dl-note">lezi-novel-0.3.1.apk · 9,809,069 bytes · md5 7c467b49…3347</span>
       </div>
 
       <div class="dlbox rv" style="transition-delay:.2s">
@@ -555,9 +555,9 @@ footer .r{display:flex;gap:20px;flex-wrap:wrap}
         msg.textContent = 'Android 安装包 · 需装到安卓手机上使用 · ' + sizeMB;
       }
       /* 公告条的版本号也跟清单走。
-         ⚠️ publish_apk.py 的替换规则里没有「v0.3.0」这种形态，只改 MB / bytes / md5 / 文件名，
-         所以这里静态写着版本号的话，下次发版它会停在旧值。由清单兜住。
-         （后面那半句「玻璃材质 · 背景模糊 · 转场重做」是本版 notes 的摘要，发新版要手改。） */
+         publish_apk.py 已有 `<b>v数字.数字.数字</b>` 的同步规则（2026-10-27 补），
+         这里再兜一层是因为清单比静态文本更可信 —— 页面被单独改动时也不会写错版本。
+         ⚠️ 但 `<span>` 里那半句摘要讲的是本版改了什么，机器不可能知道，发版必须手改。 */
       var ann = document.querySelector('.hero .ann b');
       if(ann && v.versionName) ann.textContent = 'v' + v.versionName;
     })
