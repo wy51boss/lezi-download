@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>乐子小说 · 把一部长篇写到最后一章</title>
+<meta name="description" content="一个不抢你笔的写作工作室。大纲、正文、设定都在手边，稿子只留在你自己的手机里。安卓安装包，免费内测。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="乐子小说 · 把一部长篇写到最后一章">
+<meta property="og:description" content="一个不抢你笔的写作工作室。离线可写，稿子只在你的手机上。">
+<meta property="og:url" content="https://lezi.wuyi.fun/">
+<meta name="theme-color" content="#F9F8F8">
+<!--
+  DeepSeek 风格版发布页（2026-10-27）
+
+  视觉基准不是凭印象，是对着官方实测算的：
+    · www.deepseek.com        body rgb(249,248,248) / 文字 rgb(30,35,44) / h1 46px **weight 400** / 胶囊 radius 100px
+    · chat.deepseek.com       Inter / 主蓝 rgb(57,100,254)
+    · deepseek.com/harness    body #0A0A0A / h1 40px weight 400 / 白色胶囊 CTA / 产品截图悬浮 + 底部渐隐
+  取它们的公约数：暖白底、极细字重、一个视觉焦点、胶囊按钮、大量留白、不加装饰。
+
+  与之前的差别（也是这一版要避免的）：
+    · 不堆特效 —— 没有粒子 canvas、没有扫光、没有呼吸光晕、没有跑马灯
+    · 不丢本分 —— 下载链路完整：清单驱动 + 绝对地址 + 平台化文案 + 重试兜底
+    · 不吹能力 —— 写到的每一项都能在 novel-app 里指到实现
+-->
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  /* 底色与文字：取自 deepseek.com 实测值 */
+  --bg:#F9F8F8;
+  --bg-2:#FFFFFF;
+  --ink:#1E232C;
+  --ink-2:#5C6470;
+  --ink-3:#8A909A;
+  --line:rgba(30,35,44,.09);
+  --line-2:rgba(30,35,44,.055);
+  --blue:#4D6BFE;      /* DeepSeek 蓝 */
+  --blue-d:#3A55E0;
+
+  --sans:"DM Sans",-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+
+  /* 留白节奏：DS 的自信来自「敢空」。 */
+  --gap:clamp(96px,13vw,168px);
+}
+
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16px;line-height:1.6;letter-spacing:-.005em;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+::selection{background:rgba(77,107,254,.16)}
+
+/* ── 顶部弥散光：三层雾，极慢漂移 ─────────────────────
+   DS 首页那片蓝紫雾不是一个渐变，是几团互相叠加的径向光。
+   这里用 filter:blur 的大圆模拟，只在大屏渲染，移动端关掉省电。 */
+.glow{position:absolute;inset:0 0 auto;height:900px;z-index:0;overflow:hidden;pointer-events:none}
+.glow i{position:absolute;display:block;border-radius:50%;filter:blur(90px);will-change:transform}
+.glow i:nth-child(1){width:820px;height:640px;left:-6%;top:-260px;
+  background:radial-gradient(circle at 50% 50%,rgba(120,140,255,.42),rgba(120,140,255,0) 70%);
+  animation:drift1 46s ease-in-out infinite}
+.glow i:nth-child(2){width:760px;height:560px;right:-4%;top:-200px;
+  background:radial-gradient(circle at 50% 50%,rgba(160,180,255,.34),rgba(160,180,255,0) 70%);
+  animation:drift2 54s ease-in-out infinite}
+.glow i:nth-child(3){width:900px;height:420px;left:22%;top:-140px;
+  background:radial-gradient(circle at 50% 50%,rgba(196,206,255,.3),rgba(196,206,255,0) 72%);
+  animation:drift1 62s ease-in-out infinite reverse}
+@keyframes drift1{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(60px,30px,0) scale(1.08)}}
+@keyframes drift2{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(-50px,40px,0) scale(1.06)}}
+
+/* ── 导航 ─────────────────────────────────────────────── */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:50;height:64px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(20px,4vw,48px);
+  background:rgba(249,248,248,.72);
+  -webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);
+  border-bottom:1px solid transparent;transition:border-color .3s,background .3s;
+}
+header.solid{border-bottom-color:var(--line-2);background:rgba(249,248,248,.9)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.brand img{height:22px;display:block}
+.brand span{font-size:12px;letter-spacing:.16em;color:var(--ink-3);font-weight:400}
+nav{display:flex;align-items:center;gap:clamp(16px,2.4vw,32px)}
+nav a{color:var(--ink-2);text-decoration:none;font-size:14px;transition:color .2s}
+nav a:hover{color:var(--ink)}
+nav .pill{
+  display:inline-flex;align-items:center;height:38px;padding:0 18px;
+  border-radius:999px;background:var(--ink);color:#fff;font-size:14px;
+  transition:background .2s,transform .2s;
+}
+nav .pill:hover{background:#000;color:#fff;transform:translateY(-1px)}
+
+/* ── 通用 ─────────────────────────────────────────────── */
+main{position:relative;z-index:1}
+.wrap{width:min(1120px,calc(100% - 2 * clamp(20px,4vw,48px)));margin:0 auto}
+.eyebrow{
+  display:block;font-size:11.5px;letter-spacing:.16em;color:var(--ink-3);
+  text-transform:uppercase;font-weight:500;
+}
+h1,h2,h3{font-weight:400;letter-spacing:-.03em;line-height:1.14}
+h2{font-size:clamp(28px,3.6vw,42px)}
+.lede{color:var(--ink-2);font-size:clamp(15px,1.4vw,17px);line-height:1.75}
+
+/* 入场：只做一次 12px 上移 + 淡入，600ms。DS 不会让元素一直在动。 */
+.rv{opacity:0;transform:translateY(12px);
+  transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rv.in{opacity:1;transform:none}
+
+/* ── Hero ─────────────────────────────────────────────── */
+.hero{position:relative;padding:clamp(132px,17vw,196px) 0 0;text-align:center}
+.hero .ann{
+  display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 16px;
+  border-radius:999px;background:rgba(255,255,255,.7);border:1px solid var(--line);
+  font-size:13px;color:var(--ink-2);text-decoration:none;
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  transition:border-color .2s,color .2s;
+}
+.hero .ann:hover{border-color:rgba(77,107,254,.4);color:var(--ink)}
+.hero .ann b{font-weight:500;color:var(--ink)}
+.hero .ann svg{width:13px;height:13px;opacity:.6}
+.hero h1{
+  margin:30px auto 0;max-width:15em;
+  font-size:clamp(38px,6.2vw,74px);font-weight:300;letter-spacing:-.035em;line-height:1.12;
+}
+/* 标题整句同色。第一版把后半句压成灰，放到 74px 上读起来像「禁用状态」，
+   而 DeepSeek 的标题从来不靠换色造层次 —— 层次靠字号与换行。 */
+.hero h1 em{font-style:normal;color:inherit}
+.hero .lede{margin:26px auto 0;max-width:33em}
+.ctas{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:38px;flex-wrap:wrap}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  height:52px;padding:0 30px;border-radius:999px;
+  font-size:15px;font-weight:500;letter-spacing:.005em;
+  text-decoration:none;border:1px solid transparent;cursor:pointer;
+  transition:background .2s var(--ease),border-color .2s,color .2s,transform .2s var(--ease);
+}
+.btn .ic{width:16px;height:16px;flex:none}
+.btn-primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn-primary:hover{background:#000;border-color:#000;transform:translateY(-1px)}
+.btn-primary:active{transform:none}
+.btn-ghost{background:rgba(255,255,255,.6);color:var(--ink);border-color:var(--line)}
+.btn-ghost:hover{background:#fff;border-color:rgba(30,35,44,.2)}
+
+/* 元信息行：一粒灰字，紧跟按钮。不抢戏，但要有。 */
+.meta{
+  margin-top:18px;font-family:var(--mono);font-size:12px;color:var(--ink-3);
+  display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;
+  min-height:18px;
+}
+.meta .sep{opacity:.45}
+.meta a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+#dlstate{transition:color .25s}
+#dlstate.on{color:var(--blue)}
+
+/* 产品截图：悬浮 + 底部渐隐（DSH 的手法）。
+   mask 让截图边缘化开，不再是一张「贴上去的矩形」。 */
+.hero-shot{
+  position:relative;margin:clamp(56px,7vw,88px) auto 0;
+  width:min(1020px,100%);padding:0 clamp(10px,3vw,40px);
+}
+.hero-shot .frame{
+  position:relative;border-radius:clamp(14px,1.6vw,22px);overflow:hidden;
+  border:1px solid rgba(30,35,44,.08);background:#fff;
+  box-shadow:0 1px 2px rgba(30,35,44,.04),
+             0 18px 40px -24px rgba(30,35,44,.18),
+             0 60px 120px -60px rgba(30,35,44,.22);
+  -webkit-mask-image:linear-gradient(to bottom,#000 62%,rgba(0,0,0,.55) 84%,transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 62%,rgba(0,0,0,.55) 84%,transparent 100%);
+}
+.hero-shot .frame img{display:block;width:100%;height:auto}
+
+/* ── 三件事 ───────────────────────────────────────────── */
+.three{padding:var(--gap) 0 0}
+.three .grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border-top:1px solid var(--line);margin-top:44px;
+}
+.three .col{padding:34px clamp(18px,2.6vw,40px) 0;border-left:1px solid var(--line)}
+.three .col:first-child{border-left:none;padding-left:0}
+.three h3{font-size:19px;font-weight:500;letter-spacing:-.015em;margin-bottom:10px}
+.three p{font-size:15px;color:var(--ink-2);line-height:1.72}
+.three .num{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);display:block;margin-bottom:16px}
+
+/* ── 界面 ─────────────────────────────────────────────── */
+.shots{padding:var(--gap) 0 0}
+.shots .head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.shots .head p{max-width:30em;margin-top:14px}
+.rail{
+  display:flex;gap:18px;margin-top:44px;overflow-x:auto;scroll-snap-type:x mandatory;
+  padding-bottom:12px;scrollbar-width:none;
+}
+.rail::-webkit-scrollbar{display:none}
+.rail figure{flex:none;width:clamp(240px,29vw,330px);scroll-snap-align:start}
+.rail .ph{
+  border-radius:16px;overflow:hidden;background:#fff;border:1px solid var(--line);
+  box-shadow:0 1px 2px rgba(30,35,44,.04),0 14px 30px -22px rgba(30,35,44,.2);
+}
+.rail img{display:block;width:100%;height:auto}
+.rail figcaption{margin-top:12px;font-size:13px;color:var(--ink-3)}
+.rail figcaption b{display:block;font-weight:500;color:var(--ink);margin-bottom:2px;font-size:13.5px}
+.railhint{margin-top:16px;font-size:12px;color:var(--ink-3);font-family:var(--mono)}
+
+/* ── 能力（细列表，不做卡片墙）──────────────────────── */
+.ability{padding:var(--gap) 0 0}
+.alist{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:0 clamp(32px,5vw,72px);margin-top:44px;
+  border-top:1px solid var(--line);
+}
+.arow{
+  display:flex;gap:18px;padding:22px 0;border-bottom:1px solid var(--line-2);
+  align-items:baseline;
+}
+.arow .k{
+  flex:none;width:6.4em;font-family:var(--mono);font-size:11.5px;
+  color:var(--ink-3);letter-spacing:.02em;
+}
+.arow .v{font-size:15px;color:var(--ink-2);line-height:1.7}
+.arow .v b{font-weight:500;color:var(--ink)}
+.note{
+  margin-top:28px;font-size:13px;color:var(--ink-3);line-height:1.75;max-width:52em;
+}
+.note b{color:var(--ink-2);font-weight:500}
+
+/* ── 下载 ─────────────────────────────────────────────── */
+.dl{padding:var(--gap) 0 var(--gap);text-align:center}
+.dl h2{font-size:clamp(30px,4.4vw,52px);font-weight:300}
+.dl .lede{margin:18px auto 0;max-width:26em}
+.dl .ctas{justify-content:center}
+.dl .meta{justify-content:center}
+.dlbox{
+  margin-top:56px;border:1px solid var(--line);border-radius:24px;
+  background:rgba(255,255,255,.66);
+  -webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);
+  padding:clamp(28px,4vw,44px) clamp(22px,4vw,48px);
+  display:grid;grid-template-columns:1fr auto;gap:clamp(24px,4vw,56px);align-items:center;
+  text-align:left;max-width:960px;margin-left:auto;margin-right:auto;
+}
+.dlbox .steps{display:grid;gap:14px}
+.dlbox .step{display:flex;gap:14px;align-items:baseline;font-size:14px;color:var(--ink-2);line-height:1.65}
+.dlbox .step i{
+  flex:none;width:1.9em;font-style:normal;font-family:var(--mono);font-size:11px;
+  color:var(--ink-3);letter-spacing:.04em;
+}
+.dlbox .step b{color:var(--ink);font-weight:500}
+.dlbox .qr{text-align:center}
+.dlbox .qr img{width:132px;height:132px;border-radius:10px;display:block;
+  border:1px solid var(--line);background:#fff}
+.dlbox .qr p{margin-top:10px;font-size:11.5px;color:var(--ink-3);font-family:var(--mono)}
+
+/* ── 页脚 ─────────────────────────────────────────────── */
+footer{border-top:1px solid var(--line);padding:36px 0 44px}
+footer .row{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer .l{display:flex;align-items:center;gap:14px;font-size:12.5px;color:var(--ink-3)}
+footer img{height:18px;opacity:.85}
+footer a{color:var(--ink-3);text-decoration:none;font-size:12.5px}
+footer a:hover{color:var(--ink)}
+footer .r{display:flex;gap:20px;flex-wrap:wrap}
+
+/* ── 响应式 ───────────────────────────────────────────── */
+@media(max-width:900px){
+  .three .grid{grid-template-columns:1fr}
+  .three .col{border-left:none;padding-left:0;padding-top:28px}
+  .three .col + .col{border-top:1px solid var(--line-2)}
+  .alist{grid-template-columns:1fr}
+  .dlbox{grid-template-columns:1fr;text-align:left}
+  .dlbox .qr{justify-self:start}
+}
+@media(max-width:640px){
+  header{height:58px}
+  nav a:not(.pill){display:none}      /* 手机上只留品牌与下载，不给一堆小链接 */
+  .hero{padding-top:112px}
+  .hero h1{letter-spacing:-.028em}
+  .btn{height:50px;padding:0 24px;font-size:14.5px}
+  .ctas{flex-direction:column;align-items:stretch}
+  .ctas .btn{width:100%}
+  .glow{opacity:.75}
+  .meta{font-size:11.5px}
+  footer .row{flex-direction:column;align-items:flex-start;gap:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="glow"><i></i><i></i><i></i></div>
+
+<header id="hdr">
+  <a class="brand" href="#top">
+    <img src="assets/logo-word-dark.png" alt="乐子小说">
+    <span>LEZI NOVEL</span>
+  </a>
+  <nav>
+    <a href="#interface">界面</a>
+    <a href="#ability">能力</a>
+    <a href="changelog.html">版本记录</a>
+    <a class="pill" href="#download">下载</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- Hero：一个焦点，其余全是空 -->
+  <section class="hero">
+    <div class="wrap">
+      <a class="ann rv" href="changelog.html">
+        <b>v0.3.0</b><span>玻璃材质 · 背景模糊 · 转场重做</span>
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+
+      <h1 class="rv" style="transition-delay:.06s">把一部长篇，<br><em>写到最后一章。</em></h1>
+
+      <p class="lede rv" style="transition-delay:.12s">
+        一个不抢你笔的写作工作室。大纲、正文、设定都在手边，
+        章号自己跟上，删错了能捡回来。稿子只留在你自己的手机里。
+      </p>
+
+      <div class="ctas rv" style="transition-delay:.18s">
+        <a class="btn btn-primary" id="dl1" href="https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.3.0.apk" download>
+          <span class="lbl">下载内测版安装包</span>
+          <svg class="ic" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.6v8.1M4.7 7.5 8 10.8l3.3-3.3M2.9 13.2h10.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="#interface">先看看它长什么样</a>
+      </div>
+
+      <div class="meta rv" style="transition-delay:.22s">
+        <span id="dlstate">Android 8.0 以上 · 安装包 9.4 MB</span>
+      </div>
+    </div>
+
+    <div class="hero-shot rv" style="transition-delay:.26s">
+      <div class="frame">
+        <img src="assets/shot-editor.png" alt="乐子小说写作编辑器" fetchpriority="high">
+      </div>
+    </div>
+  </section>
+
+  <!-- 三件事：不做卡片，用一条细线分三栏 -->
+  <section class="three">
+    <div class="wrap">
+      <span class="eyebrow rv">Why</span>
+      <h2 class="rv" style="margin-top:16px;transition-delay:.05s">写作本来就够累了，<br>工具不该再添一件事。</h2>
+      <div class="grid">
+        <div class="col rv" style="transition-delay:.1s">
+          <span class="num">01</span>
+          <h3>写到哪都有痕迹</h3>
+          <p>卷和章是两层，大纲是另一棵树，可以一直往下分。章号按位置算，插一章、删一章，后面自己往后挪，不用你一个个改。</p>
+        </div>
+        <div class="col rv" style="transition-delay:.16s">
+          <span class="num">02</span>
+          <h3>删错了能捡回来</h3>
+          <p>删掉的章和设定进回收站，不是当场消失。清空一个节点也不算删除 —— 它还在，只是不再占位置。</p>
+        </div>
+        <div class="col rv" style="transition-delay:.22s">
+          <span class="num">03</span>
+          <h3>稿子不上云</h3>
+          <p>写作全程离线可用，不注册也能写。数据在你手机的数据库里，导出、备份、导入都是你自己的文件。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 界面：横向轨道，实机截图 -->
+  <section class="shots" id="interface">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <span class="eyebrow rv">Interface</span>
+          <h2 class="rv" style="margin-top:16px;transition-delay:.05s">它现在长这样</h2>
+          <p class="lede rv" style="transition-delay:.09s">六屏都是实机截图，不是效果图。</p>
+        </div>
+      </div>
+      <div class="rail rv" style="transition-delay:.12s">
+        <figure>
+          <div class="ph"><img src="assets/shot-shelf.png" alt="书架" loading="lazy"></div>
+          <figcaption><b>书架</b>作品 · 进度 · 字数</figcaption>
+        </figure>
+        <figure>
+          <div class="ph"><img src="assets/shot-detail.png" alt="作品详情" loading="lazy"></div>
+          <figcaption><b>作品详情</b>卷 → 章的展开</figcaption>
+        </figure>
+        <figure>
+          <div class="ph"><img src="assets/shot-editor.png" alt="正文编辑器" loading="lazy"></div>
+          <figcaption><b>正文编辑</b>衬线 · 首行缩进 · 两端对齐</figcaption>
+        </figure>
+        <figure>
+          <div class="ph"><img src="assets/shot-docs.png" alt="大纲设定" loading="lazy"></div>
+          <figcaption><b>大纲设定</b>任意层级，每层都能写</figcaption>
+        </figure>
+        <figure>
+          <div class="ph"><img src="assets/shot-mine.png" alt="我的" loading="lazy"></div>
+          <figcaption><b>我的</b>统计 · 备份 · 外观</figcaption>
+        </figure>
+        <figure>
+          <div class="ph"><img src="assets/shot-insp.png" alt="灵感" loading="lazy"></div>
+          <figcaption><b>灵感</b>先记下来，再决定归给谁</figcaption>
+        </figure>
+      </div>
+      <p class="railhint">← → 可以横向翻</p>
+    </div>
+  </section>
+
+  <!-- 能力：细列表。有什么写什么，没有的不写。 -->
+  <section class="ability" id="ability">
+    <div class="wrap">
+      <span class="eyebrow rv">Ability</span>
+      <h2 class="rv" style="margin-top:16px;transition-delay:.05s">这一版能做到的事</h2>
+      <div class="alist">
+          <div class="arow rv"><span class="k">正文</span><span class="v"><b>卷 → 章两层结构</b>，插删自动顺延章号；段落内两级缩进与两端对齐</span></div>
+          <div class="arow rv"><span class="k">大纲</span><span class="v"><b>任意层级的树</b>，卷纲、章纲、设定、正文都能放，每层都能写</span></div>
+          <div class="arow rv"><span class="k">回收站</span><span class="v">删除是<b>打标记</b>不是抹掉，能还原；清空节点只是缩短显示</span></div>
+          <div class="arow rv"><span class="k">备份</span><span class="v">JSON <b>整本导出/导入</b>，可选口令加密；导入有合并与覆盖两种</span></div>
+          <div class="arow rv"><span class="k">外观</span><span class="v">明暗、强调色、字色、纸色；<b>背景图可模糊与羽化</b>，编辑器单独一套</span></div>
+          <div class="arow rv"><span class="k">编辑器</span><span class="v">行距三档、<b>专注模式</b>、字号主题卡、打字微反馈</span></div>
+          <div class="arow rv"><span class="k">统计</span><span class="v">今日字数、连续天数、近 14 天曲线</span></div>
+          <div class="arow rv"><span class="k">更新</span><span class="v">应用内<b>检查更新</b>并直接装新版，不用回下载页</span></div>
+      </div>
+      <p class="note">
+        <b>关于 AI：</b>这一版只有「聊天机器人」一个通道是通的 —— 你在设置里填自己的模型地址与密钥，
+        它就能陪你想、帮你查、按你的要求改。另外三个分工智能体目前是占位，点发送会提示还没接通。
+        <b>我们不写成「一键生成小说」</b>，因为它不是。
+      </p>
+    </div>
+  </section>
+
+  <!-- 下载 -->
+  <section class="dl" id="download">
+    <div class="wrap">
+      <h2 class="rv">装上，就能开始写</h2>
+      <p class="lede rv" style="transition-delay:.05s">安卓安装包，免费内测。装好后升级在应用里完成。</p>
+
+      <div class="ctas rv" style="transition-delay:.1s">
+        <a class="btn btn-primary" id="dl2" href="https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.3.0.apk" download>
+          <span class="lbl">下载 APK · 9.4 MB</span>
+          <svg class="ic" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.6v8.1M4.7 7.5 8 10.8l3.3-3.3M2.9 13.2h10.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <div class="meta rv" style="transition-delay:.14s">
+        <span id="dlmsg">Android 安装包 · 需装到安卓手机上使用 · 9.4 MB</span>
+      </div>
+      <div class="meta rv" style="transition-delay:.16s;margin-top:8px;font-size:11.5px">
+        <span class="dl-note">lezi-novel-0.3.0.apk · 9,809,069 bytes · md5 b6a75287…3117</span>
+      </div>
+
+      <div class="dlbox rv" style="transition-delay:.2s">
+        <div class="steps">
+          <div class="step"><i>01</i><span><b>点下载</b> · 浏览器开始下安装包，约 9.4 MB。</span></div>
+          <div class="step"><i>02</i><span><b>点开文件</b> · 在通知栏或「下载」里找到它。</span></div>
+          <div class="step"><i>03</i><span><b>允许安装</b> · 系统问「未知应用」时允许一次。</span></div>
+          <div class="step"><i>04</i><span><b>以后在应用里升级</b> · 设置 → 关于 → 检查更新。</span></div>
+        </div>
+        <div class="qr">
+          <img src="assets/qr.png" alt="扫码在手机上打开本页" loading="lazy">
+          <p>手机扫码打开本页</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap row">
+    <div class="l">
+      <img src="assets/logo-word-dark.png" alt="乐子小说">
+      <span>© 2026 乐子小说</span>
+    </div>
+    <div class="r">
+      <a href="changelog.html">版本记录</a>
+      <a href="#ability">能力</a>
+      <a href="#download">下载</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ── 入场：进入视口一次性淡入，然后就不再管它 ─────────── */
+  var rvs = [].slice.call(document.querySelectorAll('.rv'));
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin:'0px 0px -8% 0px', threshold:0.08 });
+    rvs.forEach(function(el){ io.observe(el); });
+  }else{
+    rvs.forEach(function(el){ el.classList.add('in'); });
+  }
+  /* 首屏元素在 Load 之前就已经在视口里，IO 会立刻回调；兜底再补一次 */
+  setTimeout(function(){
+    rvs.forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if(r.top < innerHeight * 0.95) el.classList.add('in');
+    });
+  }, 60);
+
+  /* ── 顶栏：滚过 24px 才出现分隔线，避免一上来就有条线 ── */
+  var hdr = document.getElementById('hdr');
+  function onScroll(){
+    if(!hdr) return;
+    hdr.classList.toggle('solid', window.scrollY > 24);
+  }
+  addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  /* ── 下载：清单驱动 + 平台文案 + 不假装知道进度 ───────────
+     与 index.html 同一套逻辑（两份页面各一份，改一处要同步另一处）。
+     约束：APK 域没有 CORS，也没有 Range —— 拿不到真实下载进度，
+     所以这里不画进度条，只如实说「已开始下载」，再给重试兜底。 */
+  var st = document.getElementById('dlstate');
+  var msg = document.getElementById('dlmsg');
+  var note = document.querySelector('.dl-note');
+  var dl1 = document.getElementById('dl1'), dl2 = document.getElementById('dl2');
+  var isAndroid = /android/i.test(navigator.userAgent || '');
+
+  function mb(b){ return (b / 1048576).toFixed(1) + ' MB'; }
+  function bytes(b){ return String(b).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+
+  if(isAndroid){
+    if(dl1) dl1.querySelector('.lbl').textContent = '安装到这台手机';
+    if(st) st.textContent = 'Android 8.0 以上 · 安装包 9.4 MB';
+  }else{
+    if(dl1) dl1.querySelector('.lbl').textContent = '下载 APK';
+    if(msg) msg.textContent = 'Android 安装包 · 需装到安卓手机上使用 · 9.4 MB';
+  }
+
+  fetch('version.json?t=' + Date.now(), { cache:'no-store' })
+    .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+    .then(function(v){
+      if(!v || !v.url) return;
+      var sizeMB = mb(v.size);
+      [dl1, dl2].forEach(function(a){ if(a) a.href = v.url; });
+      if(dl2) dl2.querySelector('.lbl').textContent = '下载 APK · ' + sizeMB;
+      if(note){
+        note.textContent = v.url.split('/').pop() + ' · ' + bytes(v.size) + ' bytes · md5 ' +
+          v.md5.slice(0,8) + '…' + v.md5.slice(-4);
+      }
+      if(st && !st.classList.contains('on')){
+        st.textContent = 'Android 8.0 以上 · 安装包 ' + sizeMB;
+      }
+      if(msg && !msg.classList.contains('on')){
+        msg.textContent = 'Android 安装包 · 需装到安卓手机上使用 · ' + sizeMB;
+      }
+      /* 公告条的版本号也跟清单走。
+         ⚠️ publish_apk.py 的替换规则里没有「v0.3.0」这种形态，只改 MB / bytes / md5 / 文件名，
+         所以这里静态写着版本号的话，下次发版它会停在旧值。由清单兜住。
+         （后面那半句「玻璃材质 · 背景模糊 · 转场重做」是本版 notes 的摘要，发新版要手改。） */
+      var ann = document.querySelector('.hero .ann b');
+      if(ann && v.versionName) ann.textContent = 'v' + v.versionName;
+    })
+    .catch(function(){ /* 静态数字兜底，不打扰 */ });
+
+  [dl1, dl2].forEach(function(a){
+    if(!a) return;
+    a.addEventListener('click', function(){
+      /* 首屏那颗改的是 hero 的元信息行，下载区那颗改的是自己的行 —— 别串了 */
+      var line = (a.id === 'dl1') ? st : msg;
+      if(!line) return;
+      line.classList.add('on');
+      line.textContent = isAndroid ? '已开始下载 · 下拉通知栏看进度'
+                                   : '已开始下载 · 装到安卓手机上才能安装';
+      setTimeout(function(){
+        line.innerHTML = (isAndroid ? '还没动？' : '还是没反应？') +
+          ' <a href="' + a.href + '" download>点这里重试</a>';
+      }, 3500);
+    });
+  });
+})();
+</script>
+</body>
+</html>
