@@ -258,11 +258,11 @@ footer{border-top:1px solid var(--line);margin-top:40px;
       <span class="pulse"></span>
       <span class="nl">
         <small>当前版本</small>
-        <b data-ver>0.3.1</b>
+        <b data-ver>0.4.0</b>
       </span>
       <span class="nm">
-        <span>versionCode <b data-vcode>13</b></span>
-        <span>发布 <b data-built>2026-10-27</b></span>
+        <span>versionCode <b data-vcode>14</b></span>
+        <span>发布 <b data-built>2026-11-03</b></span>
         <span>Android 8.0+</span>
       </span>
     </div>
@@ -295,7 +295,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;
       </div>
     </div>
   </div>
-  <div class="copy">乐子小说 · com.lezi.novel · v<span data-ver>0.3.1</span> · 内测版 · Android 8.0+</div>
+  <div class="copy">乐子小说 · com.lezi.novel · v<span data-ver>0.4.0</span> · 内测版 · Android 8.0+</div>
 </footer>
 
 <script>
@@ -310,6 +310,17 @@ footer{border-top:1px solid var(--line);margin-top:40px;
    发布记录，不是事后补的漂亮话。措辞可以整理，事实不许改。
    ════════════════════════════════════════════════════════════ */
 var RELEASES = [
+  { code:14, ver:'0.4.0', date:'2026-11-03', topic:'账号自建 · 模型可配多条 · 续写员上岗 · 资料库可检索', items:[
+    '账号<b>整套换掉</b>：不再借别人的服务登录，改成自己那台服务器直接收发。注册只要邮箱和密码，不用等验证码、不用收邮件',
+    '登录态改成<b>「一台设备被授权到什么时候」</b>，不再每两小时自己变回「没登录」。实测：放一晚上再打开，还是登录状态',
+    '新增<b>「模型接入」独立页</b>：续写、生图、配音各配各的，一个用途可以存好几条换着用',
+    '<b>用乐子云端</b>不用填 Key：登录之后直接选模型，每天有固定额度',
+    '工作室里<b>人设和模型分开</b>了：改人设不用再路过一堆地址和 Key 输入框',
+    '新成员<b>「章节续写员」</b>：接你写到的位置往下写。它必须先读上一章再动笔，读不到会先问你',
+    '资料库<b>能被它查了</b>：写的时候它会自己去搜你记过的设定、导入的参考书，命中几下都摆在回答上面',
+    '它能<b>推卡片</b>了：想问你一句，或者想把写好的那段收进正文 —— 都要你点一下才生效，它不能自己改稿',
+    'AI 回复前会<b>先把过期的登录票换掉</b>，不再出现过一刻钟就报「token 无效」'
+  ]},
   { code:13, ver:'0.3.1', date:'2026-10-27', topic:'抽屉手感 · 章节菜单重做 · 键盘不再遮住光标', items:[
     '左右抽屉<b>更容易拉开也更容易关</b>：门槛两边一样，越过时会有一次轻震告诉你「可以松手了」',
     '编辑器<b>键盘弹起时光标不再被压住</b>，正文会自动让到键盘上方',
