@@ -413,6 +413,16 @@ section{max-width:1230px;margin:0 auto;
 h2{font-size:clamp(26px,3.6vw,41px);margin:0 0 16px;font-weight:700;letter-spacing:-.025em;line-height:1.24}
 .sub{color:var(--dim);font-size:15.5px;max-width:44em;margin:0 0 52px}
 
+/* ─── 这一版改了什么（2026-11-08 加）─────────────────────────
+   版本记录不该只活在 changelog 那一页里：大多数人只看首页。
+   数据来自 releases.json —— 与 App 内版本记录、changelog 页同一份真源。 */
+.lastx{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:11px;max-width:880px}
+.lastx li{position:relative;padding-left:20px;font-size:14.5px;line-height:1.8;color:var(--ink-2)}
+.lastx li::before{content:'';position:absolute;left:2px;top:.78em;width:5px;height:5px;
+  border-radius:50%;background:var(--brand)}
+.lastx-more{margin-top:24px;font-size:13px}
+.lastx-more a{color:var(--brand);text-decoration:none;border-bottom:1px solid rgba(31,94,255,.28)}
+
 /* ─── 画廊 ───────────────────────────────── */
 .gal{
   display:flex;gap:34px;overflow-x:auto;padding:12px 6px 34px;
@@ -768,7 +778,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;
         <p class="kicker">不是「一键生成小说」。是<b>让 AI 像人一样，陪你写完这一部长篇</b>。</p>
       </div>
       <div class="cta rv d3">
-        <a class="btn btn-holo mag" id="dl1" href="https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.5.0.apk" download>
+        <a class="btn btn-holo mag" id="dl1" href="https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.6.0.apk" download>
           <span class="sheen"></span><span class="lbl">下载内测版安装包</span><i class="ic">↓</i>
         </a>
         <a class="btn mag" href="#gallery"><span class="sheen"></span><span class="lbl">先看看它长什么样</span></a>
@@ -911,17 +921,28 @@ footer{border-top:1px solid var(--line);margin-top:40px;
         <div class="term-bar"><i></i><i></i><i></i><span>lezi-novel — build info</span></div>
         <div class="term-body">
           <div class="term-row"><em>package</em><b>com.lezi.novel</b></div>
-          <div class="term-row"><em>versionName</em><b>0.5.0</b></div>
-          <div class="term-row"><em>versionCode</em><b>18</b></div>
+          <div class="term-row"><em>versionName</em><b>0.6.0</b></div>
+          <div class="term-row"><em>versionCode</em><b>19</b></div>
           <div class="term-row"><em>minSdk / targetSdk</em><b>26 / 36</b></div>
           <div class="term-row"><em>abi</em><b>universal</b></div>
-          <div class="term-row"><em>md5</em><b>d300e27b…e03b</b></div>
-          <div class="term-row"><em>size</em><b>9,891,037 B</b></div>
-          <div class="term-row"><em>built</em><b>2026-11-08 01:24</b></div>
+          <div class="term-row"><em>md5</em><b>50e961a8…ade5</b></div>
+          <div class="term-row"><em>size</em><b>9,907,421 B</b></div>
+          <div class="term-row"><em>built</em><b>2026-11-08 04:22</b></div>
           <div class="term-row"><em>signing</em><b class="ok">release ✓</b></div>
         </div>
       </div>
     </div>
+  </section>
+
+
+  <!-- 这一版改了什么（2026-11-08 加）：版本内容必须出现在「介绍页」，
+       不能只藏在 changelog 里。数据源 releases.json。 -->
+  <section id="last">
+    <div class="eyebrow rise">This build</div>
+    <h2 class="rise d1">这一版改了什么</h2>
+    <p class="sub rise d2" id="lastxTopic">正在读取版本记录…</p>
+    <ul class="lastx" id="lastxList"></ul>
+    <p class="lastx-more rv d4"><a href="changelog.html">看全部版本的记录 →</a></p>
   </section>
 
   <section id="download" style="padding-top:0">
@@ -940,13 +961,13 @@ footer{border-top:1px solid var(--line);margin-top:40px;
           <h3>下载乐子小说 · 内测版</h3>
           <p>点下面的按钮开始下载。下载完成后点开文件，系统会问一次是否允许安装 —— 允许，然后下一步即可。</p>
           <div class="dl-btns">
-            <a class="btn btn-holo mag" id="dl2" href="https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.5.0.apk" download>
+            <a class="btn btn-holo mag" id="dl2" href="https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.6.0.apk" download>
               <span class="sheen"></span><span class="lbl">下载 APK · 9.4 MB</span><i class="ic">↓</i>
             </a>
             <a class="btn mag" href="#top"><span class="sheen"></span><span class="lbl">回到顶部</span></a>
           </div>
           <div id="dlstate"><span id="dlmsg">正在下载…</span><span class="bar"></span></div>
-          <div class="dl-note">lezi-novel-0.5.0.apk · 9,891,037 bytes · md5 d300e27b…e03b</div>
+          <div class="dl-note">lezi-novel-0.6.0.apk · 9,907,421 bytes · md5 50e961a8…ade5</div>
         </div>
         <div class="qrc">
           <div class="qrc-box"><img src="assets/qr.png" alt="扫码打开本页" loading="lazy"></div>
@@ -1014,12 +1035,12 @@ footer{border-top:1px solid var(--line);margin-top:40px;
       </div>
       <div class="col">
         <h5>其他</h5>
-        <a href="https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.5.0.apk" download>直接下载 APK</a>
+        <a href="https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.6.0.apk" download>直接下载 APK</a>
         <a href="#top">回到顶部</a>
       </div>
     </div>
   </div>
-  <div class="copy">乐子小说 · com.lezi.novel · v0.5.0 · 内测版 · Android 8.0+</div>
+  <div class="copy">乐子小说 · com.lezi.novel · v0.6.0 · 内测版 · Android 8.0+</div>
 </footer>
 
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="放大查看截图">
@@ -1497,6 +1518,31 @@ footer{border-top:1px solid var(--line);margin-top:40px;
   onParallax();
   revealCheck();
   flow();
+})();
+
+/* ── 这一版改了什么：取 releases.json 里 code 最大的那条 ──
+   ⚠️ 不在页面里硬编码任何一条改动 —— 硬编码就等于第二份数据，
+      也就是「软件里一套、网站上另一套」的老问题。 */
+(function(){
+  var box = document.getElementById('lastxList');
+  var topic = document.getElementById('lastxTopic');
+  if(!box || !topic) return;
+  fetch('releases.json', {cache:'no-store'})
+    .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+    .then(function(list){
+      if(!list || !list.length) return;
+      /* 只看真发出去的版本 —— published:false 是占号未分发的内部构建 */
+      var live = list.filter(function(x){ return x.published !== false; });
+      if(!live.length) return;
+      var r = live.slice().sort(function(a,b){ return b.code - a.code; })[0];
+      topic.textContent = 'v' + r.version + ' · ' + r.title;
+      box.innerHTML = r.items.map(function(t){
+        return '<li>' + t + '</li>';
+      }).join('');
+    })
+    .catch(function(){
+      topic.textContent = '版本记录读取失败 —— 点下面的链接看完整记录。';
+    });
 })();
 </script>
 </body>
