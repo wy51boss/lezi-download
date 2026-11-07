@@ -258,11 +258,11 @@ footer{border-top:1px solid var(--line);margin-top:40px;
       <span class="pulse"></span>
       <span class="nl">
         <small>当前版本</small>
-        <b data-ver>0.4.3</b>
+        <b data-ver>0.5.0</b>
       </span>
       <span class="nm">
-        <span>versionCode <b data-vcode>17</b></span>
-        <span>发布 <b data-built>2026-11-04</b></span>
+        <span>versionCode <b data-vcode>18</b></span>
+        <span>发布 <b data-built>2026-11-08</b></span>
         <span>Android 8.0+</span>
       </span>
     </div>
@@ -295,7 +295,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;
       </div>
     </div>
   </div>
-  <div class="copy">乐子小说 · com.lezi.novel · v<span data-ver>0.4.3</span> · 内测版 · Android 8.0+</div>
+  <div class="copy">乐子小说 · com.lezi.novel · v<span data-ver>0.5.0</span> · 内测版 · Android 8.0+</div>
 </footer>
 
 <script>
@@ -310,6 +310,15 @@ footer{border-top:1px solid var(--line);margin-top:40px;
    发布记录，不是事后补的漂亮话。措辞可以整理，事实不许改。
    ════════════════════════════════════════════════════════════ */
 var RELEASES = [
+  { code:18, ver:'0.5.0', date:'2026-11-08', topic:'它记得问过你什么 · 长对话不再卡住 · 资料库能按意思搜', items:[
+    '上一轮它问「用哪个人名」，你答了 —— 现在它<b>真的记得</b>。以前那张卡片进不了历史，过两轮它会再问一遍，像没听见你说话',
+    '聊得再长也<b>不会撞到模型的长度上限</b>：超出部分从最早的那几句开始让位，并且会告诉你「前面还有 N 条已省略」，而不是假装对话从这儿开始',
+    '带进对话的正文太长时<b>从中间截断</b>，开头和结尾都留着 —— 开头是场景人物，结尾是你要接的那句话',
+    '每个成员能做什么，现在<b>是真的</b>了：锐评小助理只会评，就算模型不听话，也推不出「把这段写进正文」那张卡',
+    '续写员<b>一直能找到资料库</b>了。以前库里没东西时它连搜都搜不了，只能回「我没有这个工具」',
+    '资料库支持<b>嵌入模型</b>：配一条嵌入通道后，搜「江雾」也能找到「临江的雾气」这种字面完全不重合的条目',
+    '模型接入页多了一类<b>「嵌入」</b>，和续写、生图、配音各配各的。不配也照常能用，只是检索走原来的本地词频'
+  ]},
   { code:17, ver:'0.4.3', date:'2026-11-03', topic:'续写跑通了 · 屏幕跟着走 · 写进正文一键到位', items:[
     '在<b>空白的新章</b>里点续写，它会自动去读前面写好的那一章当参考，再写进你正站着的这一章 —— 不再回你「请提供上一段正文」',
     '以前空白章节也算「已带入 1 段」，读数写着「约 0 字」却什么都没有；现在只在真的有字时才计入',
