@@ -448,6 +448,9 @@ var RELEASES = [
       '</div>';
       tl.appendChild(e);
     });
+    /* 元素刚插进来，重新收集 + 立刻判一次在不在视口里 */
+    collect();
+    revealCheck();
   }
 
   /* 真源优先：线上 fetch releases.json（下载页、App 内、这一页三方同源）。
@@ -472,7 +475,15 @@ var RELEASES = [
   onScroll();
 
   /* ── 揭示 ── */
-  var pending = [].slice.call(document.querySelectorAll('.rv, .rise'));
+  /* ⚠️ 时间轴是 fetch 回来之后才插进 DOM 的。原来这里一次性
+     querySelectorAll 收集完就不再更新 —— 那一刻 #tl 还是空的，
+     于是后来插进去的每一条都永远拿不到 .in，全停在 opacity:0。
+     页面上只剩顶部那条「当前版本」，读起来就是「版本记录只有 0.6」。
+     所以收集必须能被重复调用。 */
+  var pending = [];
+  function collect(){
+    pending = [].slice.call(document.querySelectorAll('.rv:not(.in), .rise:not(.in)'));
+  }
   function revealCheck(){
     var vh = innerHeight;
     for (var i = pending.length - 1; i >= 0; i--){
@@ -486,8 +497,17 @@ var RELEASES = [
   addEventListener('scroll', revealCheck, {passive:true});
   addEventListener('resize', revealCheck);
   addEventListener('load', revealCheck);
+  collect();
   revealCheck();
-  if (!rm) setTimeout(revealCheck, 260);
+  if (!rm) setTimeout(function(){ collect(); revealCheck(); }, 260);
+
+  /* 兜底：不管上面哪一步出岔子，3 秒后一律显示。
+     版本记录读不到内容，比动效难看严重得多 —— 那等于告诉用户「我们没有历史」。 */
+  setTimeout(function(){
+    [].slice.call(document.querySelectorAll('.rv, .rise')).forEach(function(el){
+      el.classList.add('in');
+    });
+  }, 3000);
 })();
 </script>
 </body>
