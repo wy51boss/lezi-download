@@ -258,11 +258,11 @@ footer{border-top:1px solid var(--line);margin-top:40px;
       <span class="pulse"></span>
       <span class="nl">
         <small>当前版本</small>
-        <b data-ver>0.6.2</b>
+        <b data-ver>0.6.3</b>
       </span>
       <span class="nm">
-        <span>versionCode <b data-vcode>20</b></span>
-        <span>发布 <b data-built>2026-11-21</b></span>
+        <span>versionCode <b data-vcode>21</b></span>
+        <span>发布 <b data-built>2026-11-22</b></span>
         <span>Android 8.0+</span>
       </span>
     </div>
@@ -295,7 +295,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;
       </div>
     </div>
   </div>
-  <div class="copy">乐子小说 · com.lezi.novel · v<span data-ver>0.6.2</span> · 内测版 · Android 8.0+</div>
+  <div class="copy">乐子小说 · com.lezi.novel · v<span data-ver>0.6.3</span> · 内测版 · Android 8.0+</div>
 </footer>
 
 <script>
@@ -310,6 +310,14 @@ footer{border-top:1px solid var(--line);margin-top:40px;
    发布记录，不是事后补的漂亮话。措辞可以整理，事实不许改。
    ════════════════════════════════════════════════════════════ */
 var RELEASES = [
+  { code:21, ver:'0.6.3', date:'2026-11-22', topic:'工作台改成两栏：左边会话，右边对话', items:[
+    '工作台重做了：左边一栏是会话，右边是这场对话。作品就是目录，一场对话就是一次任务',
+    '对话不再长在编辑器里 —— 不打开任何一章也能开一场对话，聊完再去看稿子',
+    '左栏可以新建、改名、把会话移进回收站；换作品时会话列表跟着换',
+    '它还是不自己动你的稿子：要写进正文时会先摊一张卡，你点了才写',
+    '检查更新变得能扛事了：清单里有多个下载地址，一个不通会自己换下一个',
+    '下载全都不通时，更新页多了一个「用浏览器打开」的入口，不再只有一颗「重试」',
+  ]},
   { code:20, ver:'0.6.2', date:'2026-11-21', topic:'写小说那一屏：回车拆段不躲光标 · 撤销有重做 · 章内查找替换 · 光标跟随', items:[
     '回车拆段之后，光标落在新那段的开头 —— 以前会跳到末尾，接着写就得先把手指移到行首',
     '粘贴好几段文字进来，会按换行拆成各自的段落；以前会把它们压成一段，行与行首尾相接',
