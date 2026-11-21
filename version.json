@@ -1,9 +1,14 @@
 {
-  "versionCode": 20,
-  "versionName": "0.6.2",
-  "notes": "回车拆段之后，光标落在新那段的开头 —— 以前会跳到末尾，接着写就得先把手指移到行首；粘贴好几段文字进来，会按换行拆成各自的段落；以前会把它们压成一段，行与行首尾相接；撤销多了「重做」：撤错了能再回来。以前撤完再敲一个字，被撤掉的内容就永远没了；撤销会连同光标位置一起还原 —— 退回上一步之后，光标还停在你刚才写到的地方；工具柜里直接有「撤销 / 重做」，不用再学那个长按拖出来的手势；新增章内查找：在当前这一章里找词，命中的字会被选中，可以上下翻；还能一次把找到的全换掉（改人名不用再逐处手动改）；新增「光标跟随」开关（在外观面板里）：正在写的那一行始终停在屏幕三分之一处，内容自己往上走，眼睛不用往下追；顶栏显示「今日 N 字」：今天在这本书里写了多少，打开就看得见",
-  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.6.2.apk?sharecode=D2PWYV2Y2H",
-  "size": 9923805,
-  "md5": "570f11c3c1b3cc4009f5f57427c5e365",
-  "releasedAt": "2026-11-21 22:04"
+  "versionCode": 21,
+  "versionName": "0.6.3",
+  "notes": "工作台重做了：左边一栏是会话，右边是这场对话。作品就是目录，一场对话就是一次任务；对话不再长在编辑器里 —— 不打开任何一章也能开一场对话，聊完再去看稿子；左栏可以新建、改名、把会话移进回收站；换作品时会话列表跟着换；它还是不自己动你的稿子：要写进正文时会先摊一张卡，你点了才写；检查更新变得能扛事了：清单里有多个下载地址，一个不通会自己换下一个；下载全都不通时，更新页多了一个「用浏览器打开」的入口，不再只有一颗「重试」",
+  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.6.3.apk?sharecode=D2PWYV2Y2H",
+  "urls": [
+    "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.6.3.apk?sharecode=D2PWYV2Y2H",
+    "https://github.com/wy51boss/lezi-download/releases/download/v0.6.3/lezi-novel-0.6.3.apk"
+  ],
+  "homepage": "https://lezi.wuyi.fun",
+  "size": 9972957,
+  "md5": "dfa8b15183e146fa839c2497c6f702a6",
+  "releasedAt": "2026-11-22 01:15"
 }
