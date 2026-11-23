@@ -811,7 +811,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;
   <section id="gallery">
     <div class="eyebrow rise">Interface</div>
     <h2 class="rise d1">它现在长这样</h2>
-    <p class="sub rise d2">上面那些话，下面是它当下的样子 —— 六屏都是实机截图，不是效果图。左右滑动看全部，点任意一张可以放大。</p>
+    <p class="sub rise d2">上面那些话，下面是它当下的样子 —— 都是实机截图，不是效果图。左右滑动看全部，点任意一张可以放大。</p>
     <div class="galwrap rv d2">
       <div class="gal" id="gal">
         <figure class="gitem" data-cap="书架 · 作品、进度与字数">
@@ -825,6 +825,18 @@ footer{border-top:1px solid var(--line);margin-top:40px;
         <figure class="gitem" data-cap="正文编辑 · 衬线、首行缩进、两端对齐">
           <div class="ph"><img src="assets/shot-editor.png" alt="编辑器" loading="lazy"></div>
           <figcaption><b>正文编辑</b>衬线 · 首行缩进 · 两端对齐</figcaption>
+        </figure>
+        <figure class="gitem" data-cap="工作台 · 会话列表：每场说到哪句、谁在跑">
+          <div class="ph"><img src="assets/shot-wb-sessions.png" alt="工作台会话" loading="lazy"></div>
+          <figcaption><b>工作台 · 会话</b>每场说到哪句</figcaption>
+        </figure>
+        <figure class="gitem" data-cap="工作台 · 对话：思考可折叠，每条都有时间和用时">
+          <div class="ph"><img src="assets/shot-wb-chat.png" alt="工作台对话" loading="lazy"></div>
+          <figcaption><b>工作台 · 对话</b>时间 · 用时 · 思考可收</figcaption>
+        </figure>
+        <figure class="gitem" data-cap="工作群 · 几个员工按顺序接力干一件事">
+          <div class="ph"><img src="assets/shot-wb-groups.png" alt="工作群" loading="lazy"></div>
+          <figcaption><b>工作群</b>按顺序接力</figcaption>
         </figure>
         <figure class="gitem" data-cap="大纲设定 · 任意层级，每层都能写">
           <div class="ph"><img src="assets/shot-docs.png" alt="大纲设定" loading="lazy"></div>
@@ -898,6 +910,10 @@ footer{border-top:1px solid var(--line);margin-top:40px;
         <h3>写作的时候，世界安静</h3>
         <p class="say">写作本身完全离线，不需要注册，也不需要登录。</p>
         <p>参考内容、会话列表、AI 对话用同一种手势唤出，滑一下就回去，光标还在原来的位置。</p></div>
+      <div class="feat glass"><div class="ln"></div><div class="n">05 / AGENT</div>
+        <h3>把"对话"当成一件件活在干</h3>
+        <p class="say">作品是目录，对话是任务，员工是干活的人。</p>
+        <p>开一场对话不用先建书；挂上作品之后它才读得到稿子。想让它按流程干，就把几个员工排成一个工作群：谁先挑刺、谁再动笔、谁收尾，一条线跑完。</p></div>
     </div>
   </section>
 
@@ -1545,5 +1561,56 @@ footer{border-top:1px solid var(--line);margin-top:40px;
     });
 })();
 </script>
+
+<!-- ── 联系我们（2026-11-24）：失联时的落点 ─────────────────────
+     常规做法：右下角常驻一颗浮钮，点开给一个真能用的联系方式。
+     不放"扫二维码加群"那种一次性东西 —— 群里链接会过期，邮箱不会。 -->
+<div class="fabwrap" id="fabwrap">
+  <div class="fabpanel" id="fabpanel" hidden>
+    <b>找我们</b>
+    <p>用着不顺、哪里骗人、想要什么功能，都直接说。</p>
+    <a class="fabmail" href="mailto:2258626425@qq.com?subject=%E4%B9%90%E5%AD%90%E5%B0%8F%E8%AF%B4%EF%BC%9A%E5%8F%8D%E9%A6%88">2258626425@qq.com</a>
+    <p class="fabhint">邮件里带上版本号和手机型号，回得快一些。</p>
+    <button class="fabcopy" id="fabcopy" type="button">复制邮箱</button>
+  </div>
+  <button class="fab" id="fab" type="button" aria-label="联系我们">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>
+  </button>
+</div>
+<style>
+  .fabwrap{position:fixed;right:18px;bottom:22px;z-index:60;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+  .fab{width:46px;height:46px;border-radius:50%;border:1px solid rgba(47,91,255,.18);
+       background:rgba(255,255,255,.9);backdrop-filter:blur(10px);color:#2F5BFF;
+       display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 24px rgba(12,21,38,.10);
+       transition:transform .18s ease, box-shadow .18s ease}
+  .fab:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(12,21,38,.16)}
+  .fabpanel{width:250px;background:#fff;border:1px solid rgba(12,21,38,.08);border-radius:14px;
+       padding:14px 15px;box-shadow:0 16px 40px rgba(12,21,38,.14);font-size:13px;color:#2B3B56}
+  .fabpanel b{display:block;color:#0C1526;font-size:13.5px;margin-bottom:6px}
+  .fabpanel p{margin:0 0 8px;color:#5C6C86;line-height:1.6;font-size:12.5px}
+  .fabmail{display:inline-block;color:#2F5BFF;text-decoration:none;font-weight:600;font-size:13px;word-break:break-all}
+  .fabhint{font-size:11.5px !important;color:#8A98AD !important;margin:8px 0 10px !important}
+  .fabcopy{border:1px solid rgba(47,91,255,.25);background:rgba(47,91,255,.06);color:#2F5BFF;
+       border-radius:9px;padding:6px 10px;font-size:12px;cursor:pointer}
+  @media (max-width:600px){.fabwrap{right:14px;bottom:16px}.fabpanel{width:min(78vw,250px)}}
+</style>
+<script>
+(function(){
+  var fab=document.getElementById('fab'),panel=document.getElementById('fabpanel');
+  var cp=document.getElementById('fabcopy');
+  if(!fab||!panel)return;
+  fab.addEventListener('click',function(){panel.hidden=!panel.hidden});
+  cp&&cp.addEventListener('click',function(){
+    var t='2258626425@qq.com';
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t)}
+    cp.textContent='已复制';
+    setTimeout(function(){cp.textContent='复制邮箱'},1600);
+  });
+  document.addEventListener('click',function(e){
+    if(!panel.hidden && !panel.contains(e.target) && e.target!==fab && !fab.contains(e.target)) panel.hidden=true;
+  });
+})();
+</script>
+
 </body>
 </html>
