@@ -1,14 +1,14 @@
 {
-  "versionCode": 22,
-  "versionName": "0.6.4",
-  "notes": "工作群改成群聊：@ 谁谁答，不 @ 就伍乐乐接话并替你点人。新增伍乐乐（默认助理）和乐喵（吉祥物）。每条消息带说话人徽标，@ 出来的名字可点叫人说。工作室文案改对了。",
-  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.6.4.apk?sharecode=D2PWYV2Y2H",
+  "versionCode": 23,
+  "versionName": "0.6.5",
+  "notes": "伍乐乐变成全能助手：能看目录、整章写入、改一章的局部、移动章节、改名、删章（进回收站）、改大纲设定。工具循环放宽到12圈、每轮3个工具，干活顺序是先看目录、读过再动、改完复查。",
+  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.6.5.apk?sharecode=D2PWYV2Y2H",
   "urls": [
-    "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.6.4.apk?sharecode=D2PWYV2Y2H",
-    "https://github.com/wy51boss/lezi-download/releases/download/v0.6.4/lezi-novel-0.6.4.apk"
+    "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.6.5.apk?sharecode=D2PWYV2Y2H",
+    "https://github.com/wy51boss/lezi-download/releases/download/v0.6.5/lezi-novel-0.6.5.apk"
   ],
   "homepage": "https://lezi.wuyi.fun",
-  "size": 10022109,
-  "md5": "52d5916e8d1c8a45dcc1eb5a24747ede",
-  "releasedAt": "2026-11-24 23:13"
+  "size": 10022187,
+  "md5": "f22d5c28c01c35105360d01c03a68241",
+  "releasedAt": "2026-11-25 02:08"
 }
