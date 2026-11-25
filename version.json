@@ -1,14 +1,14 @@
 {
-  "versionCode": 23,
-  "versionName": "0.6.5",
-  "notes": "伍乐乐变成全能助手：能看目录、整章写入、改一章的局部、移动章节、改名、删章（进回收站）、改大纲设定。工具循环放宽到12圈、每轮3个工具，干活顺序是先看目录、读过再动、改完复查。",
-  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.6.5.apk?sharecode=D2PWYV2Y2H",
+  "versionCode": 24,
+  "versionName": "0.6.6",
+  "notes": "资料库接嵌入模型：一键用硅基流动（bge-m3 免费），地址和模型预填，只差一个 Key。云端模型列表按用途分开；乐子云端没有嵌入/生图/语音模型时直说，不再给空列表。",
+  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.6.6.apk?sharecode=D2PWYV2Y2H",
   "urls": [
-    "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.6.5.apk?sharecode=D2PWYV2Y2H",
-    "https://github.com/wy51boss/lezi-download/releases/download/v0.6.5/lezi-novel-0.6.5.apk"
+    "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.6.6.apk?sharecode=D2PWYV2Y2H",
+    "https://github.com/wy51boss/lezi-download/releases/download/v0.6.6/lezi-novel-0.6.6.apk"
   ],
   "homepage": "https://lezi.wuyi.fun",
-  "size": 10022187,
-  "md5": "f22d5c28c01c35105360d01c03a68241",
-  "releasedAt": "2026-11-25 02:08"
+  "size": 10038571,
+  "md5": "dc70b1e06cc9ac007b51726f3efe3ab0",
+  "releasedAt": "2026-11-25 14:01"
 }
