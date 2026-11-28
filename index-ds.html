@@ -313,7 +313,7 @@ footer .r{display:flex;gap:20px;flex-wrap:wrap}
   <section class="hero">
     <div class="wrap">
       <a class="ann rv" href="changelog.html">
-        <b>v0.6.3</b><span>字数目标可设 · 打字机模式 · 详情页重做</span>
+        <b>v0.6.7</b><span>字数目标可设 · 打字机模式 · 详情页重做</span>
         <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
 
@@ -325,7 +325,7 @@ footer .r{display:flex;gap:20px;flex-wrap:wrap}
       </p>
 
       <div class="ctas rv" style="transition-delay:.18s">
-        <a class="btn btn-primary" id="dl1" href="https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.6.3.apk?sharecode=D2PWYV2Y2H" download>
+        <a class="btn btn-primary" id="dl1" href="https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.6.7.apk?sharecode=D2PWYV2Y2H" download>
           <span class="lbl">下载内测版安装包</span>
           <svg class="ic" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.6v8.1M4.7 7.5 8 10.8l3.3-3.3M2.9 13.2h10.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
@@ -333,7 +333,7 @@ footer .r{display:flex;gap:20px;flex-wrap:wrap}
       </div>
 
       <div class="meta rv" style="transition-delay:.22s">
-        <span id="dlstate">Android 8.0 以上 · 安装包 9.5 MB</span>
+        <span id="dlstate">Android 8.0 以上 · 安装包 9.6 MB</span>
       </div>
     </div>
 
@@ -439,22 +439,22 @@ footer .r{display:flex;gap:20px;flex-wrap:wrap}
       <p class="lede rv" style="transition-delay:.05s">安卓安装包，免费内测。装好后升级在应用里完成。</p>
 
       <div class="ctas rv" style="transition-delay:.1s">
-        <a class="btn btn-primary" id="dl2" href="https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.6.3.apk?sharecode=D2PWYV2Y2H" download>
-          <span class="lbl">下载 APK · 9.5 MB</span>
+        <a class="btn btn-primary" id="dl2" href="https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.6.7.apk?sharecode=D2PWYV2Y2H" download>
+          <span class="lbl">下载 APK · 9.6 MB</span>
           <svg class="ic" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.6v8.1M4.7 7.5 8 10.8l3.3-3.3M2.9 13.2h10.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </div>
 
       <div class="meta rv" style="transition-delay:.14s">
-        <span id="dlmsg">Android 安装包 · 需装到安卓手机上使用 · 9.5 MB</span>
+        <span id="dlmsg">Android 安装包 · 需装到安卓手机上使用 · 9.6 MB</span>
       </div>
       <div class="meta rv" style="transition-delay:.16s;margin-top:8px;font-size:11.5px">
-        <span class="dl-note">lezi-novel-0.6.3.apk · 9,972,957 bytes · md5 dfa8b151…02a6</span>
+        <span class="dl-note">lezi-novel-0.6.7.apk · 10,054,959 bytes · md5 a3bc0a90…7f07</span>
       </div>
 
       <div class="dlbox rv" style="transition-delay:.2s">
         <div class="steps">
-          <div class="step"><i>01</i><span><b>点下载</b> · 浏览器开始下安装包，约 9.5 MB。</span></div>
+          <div class="step"><i>01</i><span><b>点下载</b> · 浏览器开始下安装包，约 9.6 MB。</span></div>
           <div class="step"><i>02</i><span><b>点开文件</b> · 在通知栏或「下载」里找到它。</span></div>
           <div class="step"><i>03</i><span><b>允许安装</b> · 系统问「未知应用」时允许一次。</span></div>
           <div class="step"><i>04</i><span><b>以后在应用里升级</b> · 设置 → 关于 → 检查更新。</span></div>
@@ -531,10 +531,10 @@ footer .r{display:flex;gap:20px;flex-wrap:wrap}
 
   if(isAndroid){
     if(dl1) dl1.querySelector('.lbl').textContent = '安装到这台手机';
-    if(st) st.textContent = 'Android 8.0 以上 · 安装包 9.5 MB';
+    if(st) st.textContent = 'Android 8.0 以上 · 安装包 9.6 MB';
   }else{
     if(dl1) dl1.querySelector('.lbl').textContent = '下载 APK';
-    if(msg) msg.textContent = 'Android 安装包 · 需装到安卓手机上使用 · 9.5 MB';
+    if(msg) msg.textContent = 'Android 安装包 · 需装到安卓手机上使用 · 9.6 MB';
   }
 
   fetch('version.json?t=' + Date.now(), { cache:'no-store' })
