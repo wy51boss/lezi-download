@@ -258,11 +258,11 @@ footer{border-top:1px solid var(--line);margin-top:40px;
       <span class="pulse"></span>
       <span class="nl">
         <small>当前版本</small>
-        <b data-ver>0.6.6</b>
+        <b data-ver>0.6.7</b>
       </span>
       <span class="nm">
-        <span>versionCode <b data-vcode>24</b></span>
-        <span>发布 <b data-built>2026-11-25</b></span>
+        <span>versionCode <b data-vcode>25</b></span>
+        <span>发布 <b data-built>2026-11-28</b></span>
         <span>Android 8.0+</span>
       </span>
     </div>
@@ -295,7 +295,7 @@ footer{border-top:1px solid var(--line);margin-top:40px;
       </div>
     </div>
   </div>
-  <div class="copy">乐子小说 · com.lezi.novel · v<span data-ver>0.6.6</span> · 内测版 · Android 8.0+</div>
+  <div class="copy">乐子小说 · com.lezi.novel · v<span data-ver>0.6.7</span> · 内测版 · Android 8.0+</div>
 </footer>
 
 <script>
@@ -310,12 +310,21 @@ footer{border-top:1px solid var(--line);margin-top:40px;
    发布记录，不是事后补的漂亮话。措辞可以整理，事实不许改。
    ════════════════════════════════════════════════════════════ */
 var RELEASES = [
+  { code:25, ver:'0.6.7', date:'2026-11-28', topic:'聊久了不失忆，一个动作不再查五遍', items:[
+    '长会话不再失忆：前面聊过的事会被收成一段摘要接着往下聊 —— 主角叫什么、哪一卷收在雨里，都还记着；会话的「⋯」里也能自己手动压一次',
+    '同一个动作不会连着查五遍。之前让它看一眼目录，它能把同一个查询重复五次、白白耗掉三分多钟；现在第二次就被拦下来，直接往下做',
+    '回复里不再冒出 HTML 标签，也不会在末尾拖出一大片空行',
+    '默认模型换成 DeepSeek V4.1 Flash（走 OCG 那条线路，首字更快）—— 新装或登录之后就是它，不用自己挑',
+    '模型列表不再缺项：32 个全在。之前少了 8 个嵌入模型，现在「嵌入」那一组也能一键用乐子云端，不用填 Key',
+    '登录完不用再手动配通道：云端会自动建好并设成默认；已经有一条用不了的通道占着默认位时，也会自动换到能用的那条',
+    '资料库里的东西，对话里也能搜了 —— 问它「我之前记的那条笔记在哪」，它会去翻',
+  ]},
   { code:24, ver:'0.6.6', date:'2026-11-25', topic:'资料库能按意思搜了：一键接硅基流动', items:[
     '资料库里多了一条「用硅基流动（免费）」—— 点一下，地址和模型都填好，你只要粘一个 Key',
     '接上之后搜「江雾」也能找到「临江的雾气」这种字面完全不重合的条目，不再只认字面',
     '没有 Key 的话，同一处有「去硅基流动注册」的入口（送额度，够个人用）',
     '乐子云端的模型列表按用途分开了：生图通道里不会再冒出对话模型，对话通道里也不会出现嵌入模型',
-    '乐子云端没有嵌入模型（只有对话模型），点「获取模型」时它会直说，并告诉你去哪儿配 —— 不再给你一个空列表让你以为网不好',
+    '乐子云端这次没返回模型时会直说「稍后再试」，不再给你一个空列表让你以为是自己网不好',
   ]},
   { code:23, ver:'0.6.5', date:'2026-11-24', topic:'伍乐乐能动手了：写整章、移章、改大纲', items:[
     '伍乐乐变成全能助手 —— 它现在能真的动你的稿子，不只是给建议',
