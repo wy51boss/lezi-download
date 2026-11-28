@@ -1,14 +1,14 @@
 {
-  "versionCode": 24,
-  "versionName": "0.6.6",
-  "notes": "资料库接嵌入模型：一键用硅基流动（bge-m3 免费），地址和模型预填，只差一个 Key。云端模型列表按用途分开；乐子云端没有嵌入/生图/语音模型时直说，不再给空列表。",
-  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.6.6.apk?sharecode=D2PWYV2Y2H",
+  "versionCode": 25,
+  "versionName": "0.6.7",
+  "notes": "长会话不再失忆：前面聊过的事会被收成一段摘要接着往下聊 —— 主角叫什么、哪一卷收在雨里，都还记着；会话的「⋯」里也能自己手动压一次；同一个动作不会连着查五遍。之前让它看一眼目录，它能把同一个查询重复五次、白白耗掉三分多钟；现在第二次就被拦下来，直接往下做；回复里不再冒出 HTML 标签，也不会在末尾拖出一大片空行；默认模型换成 DeepSeek V4.1 Flash（走 OCG 那条线路，首字更快）—— 新装或登录之后就是它，不用自己挑；模型列表不再缺项：32 个全在。之前少了 8 个嵌入模型，现在「嵌入」那一组也能一键用乐子云端，不用填 Key；登录完不用再手动配通道：云端会自动建好并设成默认；已经有一条用不了的通道占着默认位时，也会自动换到能用的那条；资料库里的东西，对话里也能搜了 —— 问它「我之前记的那条笔记在哪」，它会去翻",
+  "url": "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.6.7.apk?sharecode=D2PWYV2Y2H",
   "urls": [
-    "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.6.6.apk?sharecode=D2PWYV2Y2H",
-    "https://github.com/wy51boss/lezi-download/releases/download/v0.6.6/lezi-novel-0.6.6.apk"
+    "https://lezi-novel-download.app.workbuddy.host/lezi-novel-0.6.7.apk?sharecode=D2PWYV2Y2H",
+    "https://github.com/wy51boss/lezi-download/releases/download/v0.6.7/lezi-novel-0.6.7.apk"
   ],
   "homepage": "https://lezi.wuyi.fun",
-  "size": 10038571,
-  "md5": "dc70b1e06cc9ac007b51726f3efe3ab0",
-  "releasedAt": "2026-11-25 14:01"
+  "size": 10054959,
+  "md5": "a3bc0a90c9fc8158e1cde62841bc7f07",
+  "releasedAt": "2026-11-28 21:57"
 }
